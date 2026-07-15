@@ -651,7 +651,7 @@ html, body {
     cursor: pointer;
     box-shadow: 4px 4px 0 #0c3a70;
     z-index: 50;
-    transition: transform 0.1s, box-shadow 0.1s;
+    transition: transform 0.1s, box-shadow 0.1s, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 .gyro-btn:active {
     transform: translate(3px, 3px);
@@ -728,6 +728,12 @@ body.theme-pixel {
     border-color: #22c55e;
 }
 .theme-pixel .page-dot.active { background: #16a34a; }
+.theme-pixel .gyro-btn {
+    background: #16a34a;
+    border-color: #000000;
+    box-shadow: 4px 4px 0 #000000;
+    color: #eafff0;
+}
 
 /* ============================================================
    RESPONSIVE MEDIA QUERIES (Mobile and Short Viewports)
@@ -888,7 +894,7 @@ body.theme-pixel {
                     <img src="https://plain-enam-prod-public.komododecks.com/202607/15/ZMyTp0DU1sb2sI4N80nr/image.png" alt="TheGoodDeveloper" class="user-avatar">
                 </div>
                 <h3 class="user-name">TheGoodDeveloper</h3>
-                <p class="user-role">VR Developer</p>
+                <p class="user-role">@the_good_developer</p>
             </div>
         </div>
 
@@ -940,8 +946,8 @@ body.theme-pixel {
 
                         <div class="about">
                             <span class="label">ABOUT ME</span>
-                            Unity VR Developer<br>
-                            Building worlds you can stand inside.
+                            <strong>Unity Game Developer</strong><br>
+                            I don't know how to code 😭
                         </div>
 
                         <div class="links">
@@ -1079,7 +1085,7 @@ body.theme-pixel {
                         </button>
                     </div>
 
-                    <a href="https://genius.com/search?q=Larping%20the%20Rooms%20The%20Larping%20Tombstone" target="_blank" rel="noopener noreferrer" class="lyrics-link">
+                    <a href="https://genius.com/The-larping-tombstone-looping-the-rooms-larping-the-rooms-remix-lyrics" target="_blank" rel="noopener noreferrer" class="lyrics-link">
                         <i class="fa-solid fa-align-left"></i> Lyrics on Genius
                     </a>
 
