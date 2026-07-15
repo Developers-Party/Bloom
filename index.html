@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>TheGoodDeveloper • GitHub</title>
+<title>Bloom</title>
 
+<!-- Browser Icon (Favicon) -->
 <link rel="icon" type="image/png" href="https://plain-enam-prod-public.komododecks.com/202607/15/ZMyTp0DU1sb2sI4N80nr/image.png">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -27,7 +28,6 @@ html, body {
     color: #0c3a70;
     overflow: hidden;
     background: linear-gradient(180deg, #ffffff 0%, #eaf6ff 55%, #bfe3fb 100%);
-    /* Prevents pull-to-refresh on mobile */
     overscroll-behavior-y: contain; 
 }
 
@@ -85,6 +85,7 @@ html, body {
     height: calc(var(--vh, 1vh) * 100);
     width: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
@@ -96,6 +97,7 @@ html, body {
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 30px 16px;
@@ -145,6 +147,9 @@ html, body {
     background: #1a63d1;
     border-radius: 26px;
     transform: translateZ(-14px);
+    /* Dynamic shadow glow that moves with the tilt */
+    box-shadow: 0 20px 40px rgba(26, 99, 209, 0.15);
+    transition: box-shadow 0.15s ease;
 }
 .glass-card {
     width: 100%;
@@ -191,6 +196,7 @@ html, body {
     border: 3.5px solid #1a63d1;
     display: block;
     background: #fff;
+    box-shadow: 0 8px 24px rgba(26, 99, 209, 0.2);
 }
 .avatar-decoration {
     position: absolute;
@@ -228,7 +234,7 @@ html, body {
 .quote-box {
     margin-top: 14px;
     padding: 10px 12px;
-    background: #eaf6ff;
+    background: rgba(234, 246, 255, 0.7);
     border: 2.5px solid #1a63d1;
     border-radius: 14px;
     text-align: left;
@@ -346,6 +352,8 @@ html, body {
     background: #1a63d1;
     border-radius: 28px;
     transform: translateZ(-14px);
+    box-shadow: 0 20px 40px rgba(26, 99, 209, 0.15);
+    transition: box-shadow 0.15s ease;
 }
 .music-card {
     position: relative;
@@ -444,6 +452,28 @@ html, body {
 .lyrics-link:hover {
     transform: translate(1px, 1px);
     box-shadow: 2px 2px 0 #1a63d1;
+}
+
+/* GYROSCOPE OPT-IN BUTTON (Shown only on mobile when permissions needed) */
+.gyro-btn {
+    display: none;
+    margin-top: 15px;
+    padding: 10px 18px;
+    background: #1a63d1;
+    color: #ffffff;
+    border: 2.5px solid #0c3a70;
+    border-radius: 12px;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #0c3a70;
+    z-index: 50;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+.gyro-btn:active {
+    transform: translate(3px, 3px);
+    box-shadow: 1px 1px 0 #0c3a70;
 }
 
 /* ============================================================
@@ -558,17 +588,20 @@ html, body {
 </head>
 <body>
 
+<!-- ENTRY OVERLAY -->
 <div class="entry-overlay" id="entryOverlay">
     <div class="entry-text">Click to Enter...</div>
 </div>
 
+<!-- PAGES -->
 <div class="snap-container">
 <div class="pager-track" id="pagerTrack">
 
+    <!-- Page 1: Profile -->
     <div class="snap-section" id="profilePage">
         <div class="stage">
             <div class="card-3d-wrap" id="cardWrap">
-                <div class="card-depth"></div>
+                <div class="card-depth" id="profileDepth"></div>
                 <div class="glass-card">
                     <div class="banner-wrap">
                         <img src="https://plain-enam-prod-public.komododecks.com/202607/15/bIyJS2iUIN3iqAOPben7/image.png" alt="Banner" class="banner-img" id="banner">
@@ -620,13 +653,15 @@ html, body {
                     </div>
                 </div>
             </div>
+            <button class="gyro-btn" id="profileGyroBtn"><i class="fa-solid fa-mobile-screen-button"></i> Enable Tilt Effect</button>
         </div>
     </div>
 
+    <!-- Page 2: Music -->
     <div class="snap-section" id="musicPage">
         <div class="stage">
             <div class="music-card-wrap" id="musicCardWrap">
-                <div class="music-card-depth"></div>
+                <div class="music-card-depth" id="musicDepth"></div>
                 <div class="music-card">
                     <div class="music-art-wrap">
                         <img src="https://plain-enam-prod-public.komododecks.com/202607/15/QgOKvRFCBqwMT7M2ixB6/image.jpg" alt="Album art" id="musicArtImg">
@@ -650,6 +685,7 @@ html, body {
                     </audio>
                 </div>
             </div>
+            <button class="gyro-btn" id="musicGyroBtn"><i class="fa-solid fa-mobile-screen-button"></i> Enable Tilt Effect</button>
         </div>
     </div>
 
@@ -688,8 +724,10 @@ html, body {
 
     var cardWrap = document.getElementById('cardWrap');
     var banner = document.getElementById('banner');
+    var profileDepth = document.getElementById('profileDepth');
     var musicCardWrap = document.getElementById('musicCardWrap');
     var musicArtImg = document.getElementById('musicArtImg');
+    var musicDepth = document.getElementById('musicDepth');
 
     var bgAudio = document.getElementById('bgAudio');
     var playBtn = document.getElementById('playBtn');
@@ -698,7 +736,10 @@ html, body {
     var avatarDecoration = document.getElementById('avatarDecoration');
     var discordActivity = document.getElementById('discordActivity');
 
-    /* Mobile Height Safe Fix (Addresses variable mobile browser UI heights) */
+    var profileGyroBtn = document.getElementById('profileGyroBtn');
+    var musicGyroBtn = document.getElementById('musicGyroBtn');
+
+    /* Mobile Height Safe Fix */
     function resetHeight() {
         document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
     }
@@ -718,7 +759,6 @@ html, body {
 
     function goToPage(index) {
         currentPage = Math.max(0, Math.min(totalPages - 1, index));
-        pagerTrack.style.transform = 'translateY(-' + (currentPage * 100) + 'vh)';
         pagerTrack.style.transform = 'translateY(-' + (currentPage * calcPageHeight()) + 'px)';
         pageDots.forEach((dot, i) => dot.classList.toggle('active', i === currentPage));
         isAnimating = true;
@@ -730,7 +770,6 @@ html, body {
         return window.innerHeight;
     }
 
-    // Overriding style calculations based on actual pixel viewport heights
     window.addEventListener('resize', function() {
         pagerTrack.style.transform = 'translateY(-' + (currentPage * calcPageHeight()) + 'px)';
     });
@@ -762,12 +801,20 @@ html, body {
 
     pageDots.forEach(dot => dot.addEventListener('click', () => goToPage(parseInt(dot.dataset.page))));
 
-    /* LOCALIZED 3D TILT EFFECT (Hover-Only) */
+    /* PARALLAX CONTROLLERS */
     var profileTilt = { targetX: 0, targetY: 0, curX: 0, curY: 0 };
     var musicTilt = { targetX: 0, targetY: 0, curX: 0, curY: 0 };
+    var isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
+    var gyroActive = false;
 
-    function bindTilt(element, stateObj) {
+    // Base alignment offsets to read natural holding angle (approx 45 degrees forward)
+    var initialBeta = null;
+    var initialGamma = null;
+
+    function bindTilt(element, stateObj, isMusicCard) {
+        // Desktop Mouse Support
         element.addEventListener('mousemove', function (e) {
+            if (gyroActive) return; // Ignore mouse events if active gyroscope is handling tilt
             var rect = element.getBoundingClientRect();
             var x = (e.clientX - rect.left) / rect.width;
             var y = (e.clientY - rect.top) / rect.height;
@@ -776,32 +823,97 @@ html, body {
         });
 
         element.addEventListener('mouseleave', function () {
-            stateObj.targetX = 0;
-            stateObj.targetY = 0;
-        });
-        
-        // Touch support for tilt
-        element.addEventListener('touchmove', function (e) {
-            var t = e.touches[0];
-            var rect = element.getBoundingClientRect();
-            var x = (t.clientX - rect.left) / rect.width;
-            var y = (t.clientY - rect.top) / rect.height;
-            if(x >= 0 && x <= 1 && y >= 0 && y <= 1) {
-                stateObj.targetX = x - 0.5;
-                stateObj.targetY = y - 0.5;
-            }
-        }, { passive: true });
-
-        element.addEventListener('touchend', function () {
+            if (gyroActive) return;
             stateObj.targetX = 0;
             stateObj.targetY = 0;
         });
     }
 
-    bindTilt(cardWrap, profileTilt);
-    bindTilt(musicCardWrap, musicTilt);
+    bindTilt(cardWrap, profileTilt, false);
+    bindTilt(musicCardWrap, musicTilt, true);
+
+    /* Gyroscope / DeviceOrientation Implementation with Safe Math Limits */
+    function handleOrientation(event) {
+        if (!gyroActive) return;
+
+        var beta = event.beta;   // Range: [-180, 180] (Front-to-back tilt)
+        var gamma = event.gamma; // Range: [-90, 90]     (Left-to-right tilt)
+
+        if (beta === null || gamma === null) return;
+
+        // Calibrate holding angle baseline on first data stream input
+        if (initialBeta === null) {
+            initialBeta = beta;
+            initialGamma = gamma;
+        }
+
+        // Relative rotation from original holding posture
+        var deltaBeta = beta - initialBeta;
+        var deltaGamma = gamma - initialGamma;
+
+        // Strict clamp boundaries so orientation values do not warp visuals on heavy shifts
+        var maxOffsetRange = 24; 
+        deltaBeta = Math.max(-maxOffsetRange, Math.min(maxOffsetRange, deltaBeta));
+        deltaGamma = Math.max(-maxOffsetRange, Math.min(maxOffsetRange, deltaGamma));
+
+        // Normalizing values between -0.5 and 0.5
+        var normX = deltaGamma / maxOffsetRange;
+        var normY = deltaBeta / maxOffsetRange;
+
+        // Apply orientation directly to BOTH card coordinates symmetrically
+        profileTilt.targetX = normX * 0.5;
+        profileTilt.targetY = normY * 0.5;
+
+        musicTilt.targetX = normX * 0.5;
+        musicTilt.targetY = normY * 0.5;
+    }
+
+    /* Gyroscope Request Process (With Safe API Verification Checks) */
+    function initGyroscope() {
+        if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+            DeviceOrientationEvent.requestPermission()
+                .then(function (permissionState) {
+                    if (permissionState === 'granted') {
+                        gyroActive = true;
+                        window.addEventListener('deviceorientation', handleOrientation);
+                        hideGyroButtons();
+                    }
+                })
+                .catch(function () {});
+        } else if (typeof DeviceOrientationEvent !== 'undefined') {
+            // Android and older standard browsers
+            gyroActive = true;
+            window.addEventListener('deviceorientation', handleOrientation);
+            hideGyroButtons();
+        }
+    }
+
+    function checkGyroPermissionsNeeded() {
+        if (isMobile && typeof DeviceOrientationEvent !== 'undefined') {
+            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                // Safari iOS requires active opt-in
+                profileGyroBtn.style.display = 'inline-block';
+                musicGyroBtn.style.display = 'inline-block';
+            } else {
+                // Auto-initiate if permission prompt is not restricted
+                gyroActive = true;
+                window.addEventListener('deviceorientation', handleOrientation);
+            }
+        }
+    }
+
+    function hideGyroButtons() {
+        profileGyroBtn.style.display = 'none';
+        musicGyroBtn.style.display = 'none';
+    }
+
+    profileGyroBtn.addEventListener('click', initGyroscope);
+    musicGyroBtn.addEventListener('click', initGyroscope);
+
+    checkGyroPermissionsNeeded();
 
     function animate() {
+        // Interpolate profile values
         profileTilt.curX += (profileTilt.targetX - profileTilt.curX) * 0.12;
         profileTilt.curY += (profileTilt.targetY - profileTilt.curY) * 0.12;
         
@@ -809,7 +921,11 @@ html, body {
         var profileRotX = profileTilt.curY * -18;
         cardWrap.style.transform = `rotateX(${profileRotX}deg) rotateY(${profileRotY}deg)`;
         banner.style.transform = `translate(${profileTilt.curX * -14}px, ${profileTilt.curY * -10}px) scale(1.1)`;
+        
+        // Dynamically shift the background glow offset with rotation angle
+        profileDepth.style.boxShadow = `${profileTilt.curX * -12}px ${profileTilt.curY * 12}px 30px rgba(26, 99, 209, 0.18)`;
 
+        // Interpolate music values
         musicTilt.curX += (musicTilt.targetX - musicTilt.curX) * 0.12;
         musicTilt.curY += (musicTilt.targetY - musicTilt.curY) * 0.12;
 
@@ -817,6 +933,8 @@ html, body {
         var musicRotX = musicTilt.curY * -18;
         musicCardWrap.style.transform = `rotateX(${musicRotX}deg) rotateY(${musicRotY}deg)`;
         musicArtImg.style.transform = `translate(${musicTilt.curX * -10}px, ${musicTilt.curY * -10}px) scale(1.08)`;
+        
+        musicDepth.style.boxShadow = `${musicTilt.curX * -12}px ${musicTilt.curY * 12}px 30px rgba(26, 99, 209, 0.18)`;
 
         requestAnimationFrame(animate);
     }
@@ -846,11 +964,9 @@ html, body {
         }
     });
 
-    /* HTML5 Native Play/Pause Event Synchronization */
     bgAudio.addEventListener('play', () => setPlayingState(true));
     bgAudio.addEventListener('pause', () => setPlayingState(false));
 
-    /* Autoplay Handler with proper UI state sync */
     function tryAutoplay() {
         if (bgAudio.paused) {
             bgAudio.play().then(() => {
