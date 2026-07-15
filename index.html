@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>TheGoodDeveloper • GitHub</title>
 
-<!-- Browser Icon (Favicon) -->
 <link rel="icon" type="image/png" href="https://plain-enam-prod-public.komododecks.com/202607/15/ZMyTp0DU1sb2sI4N80nr/image.png">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -28,6 +27,8 @@ html, body {
     color: #0c3a70;
     overflow: hidden;
     background: linear-gradient(180deg, #ffffff 0%, #eaf6ff 55%, #bfe3fb 100%);
+    /* Prevents pull-to-refresh on mobile */
+    overscroll-behavior-y: contain; 
 }
 
 /* ============================================================
@@ -62,6 +63,7 @@ html, body {
    ============================================================ */
 .snap-container {
     height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     width: 100%;
     overflow: hidden;
     position: relative;
@@ -80,6 +82,7 @@ html, body {
 }
 .snap-section {
     height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     width: 100%;
     display: flex;
     align-items: center;
@@ -95,12 +98,12 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 48px 16px;
+    padding: 30px 16px;
     perspective: 1000px;
 }
 .page-dots {
     position: fixed;
-    right: 18px;
+    right: 14px;
     top: 50%;
     transform: translateY(-50%);
     display: flex;
@@ -132,7 +135,7 @@ html, body {
 .card-3d-wrap {
     position: relative;
     width: 100%;
-    max-width: 400px;
+    max-width: 380px;
     transform-style: preserve-3d;
     transition: transform 0.1s ease-out;
 }
@@ -154,12 +157,12 @@ html, body {
     transform: translateZ(0px);
 }
 .card-body {
-    padding: 0 26px 26px;
+    padding: 0 24px 24px;
 }
 .banner-wrap {
     position: relative;
     width: 100%;
-    height: 130px;
+    height: 120px;
     overflow: hidden;
     border-bottom: 3.5px solid #1a63d1;
     background: #bfe3fb;
@@ -176,13 +179,13 @@ html, body {
 }
 .avatar-wrap {
     position: relative;
-    width: 96px;
-    height: 96px;
-    margin: -48px auto 14px;
+    width: 90px;
+    height: 90px;
+    margin: -45px auto 12px;
 }
 .avatar {
-    width: 96px;
-    height: 96px;
+    width: 90px;
+    height: 90px;
     border-radius: 9999px;
     object-fit: cover;
     border: 3.5px solid #1a63d1;
@@ -193,8 +196,8 @@ html, body {
     position: absolute;
     top: -12px;
     left: -12px;
-    width: 120px;
-    height: 120px;
+    width: 114px;
+    height: 114px;
     pointer-events: none;
     display: none;
 }
@@ -203,14 +206,14 @@ html, body {
     align-items: center;
     justify-content: center;
     gap: 6px;
-    margin: 14px 0 0;
+    margin: 12px 0 0;
     font-size: 0.75rem;
     font-weight: 600;
     color: #3d8fd9;
 }
 .display-name {
     font-family: 'Baloo 2', sans-serif;
-    font-size: 1.55rem;
+    font-size: 1.5rem;
     font-weight: 800;
     letter-spacing: -0.01em;
     margin: 4px 0 2px;
@@ -218,13 +221,13 @@ html, body {
 }
 .handle {
     color: #3d8fd9;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 600;
     margin: 0;
 }
 .quote-box {
-    margin-top: 18px;
-    padding: 12px 14px;
+    margin-top: 14px;
+    padding: 10px 12px;
     background: #eaf6ff;
     border: 2.5px solid #1a63d1;
     border-radius: 14px;
@@ -233,47 +236,47 @@ html, body {
 }
 .quote-box p.q {
     font-style: italic;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: #0c3a70;
-    line-height: 1.5;
+    line-height: 1.45;
     margin: 0;
     font-weight: 500;
 }
 .quote-box p.src {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     color: #3d8fd9;
-    margin: 6px 0 0;
+    margin: 4px 0 0;
     font-weight: 700;
 }
 .about {
-    margin-top: 16px;
+    margin-top: 14px;
     text-align: left;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: #0c3a70;
-    line-height: 1.6;
+    line-height: 1.5;
     font-weight: 500;
 }
 .about .label {
     display: block;
     font-family: 'Baloo 2', sans-serif;
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     letter-spacing: 0.1em;
     color: #3d8fd9;
     font-weight: 700;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
 }
 .links {
-    margin-top: 18px;
+    margin-top: 16px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 .link-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 11px 14px;
-    border-radius: 16px;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 14px;
     background: #ffffff;
     border: 2.5px solid #1a63d1;
     box-shadow: 4px 4px 0 #1a63d1;
@@ -291,13 +294,13 @@ html, body {
     box-shadow: 0 0 0 #1a63d1;
 }
 .link-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
+    font-size: 0.9rem;
     flex-shrink: 0;
     background: #bfe3fb;
     border: 2px solid #1a63d1;
@@ -314,12 +317,12 @@ html, body {
     object-fit: cover;
     display: block;
 }
-.link-text { flex: 1; text-align: left; }
-.link-title { font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 0.9rem; }
-.link-sub { font-size: 0.68rem; color: #3d8fd9; margin-top: 1px; font-weight: 600; }
+.link-text { flex: 1; text-align: left; min-width: 0; }
+.link-title { font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 0.85rem; line-height: 1.2; }
+.link-sub { font-size: 0.65rem; color: #3d8fd9; margin-top: 1px; font-weight: 600; }
 .link-arrow {
     color: #0c3a70;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     transition: transform 0.15s ease;
 }
 .link-item:hover .link-arrow {
@@ -332,7 +335,7 @@ html, body {
 .music-card-wrap {
     position: relative;
     width: 100%;
-    max-width: 340px;
+    max-width: 320px;
     margin: 0 auto;
     transform-style: preserve-3d;
     transition: transform 0.1s ease-out;
@@ -349,18 +352,18 @@ html, body {
     background: linear-gradient(180deg, #ffffff 0%, #eaf6ff 70%, #dceffc 100%);
     border-radius: 28px;
     border: 3.5px solid #1a63d1;
-    padding: 30px 26px 26px;
+    padding: 26px 22px 22px;
     text-align: center;
     transform: translateZ(0px);
 }
 .music-art-wrap {
     position: relative;
-    width: 200px;
-    height: 200px;
-    margin: 0 auto 22px;
-    border-radius: 22px;
+    width: 170px;
+    height: 170px;
+    margin: 0 auto 18px;
+    border-radius: 20px;
     border: 3.5px solid #1a63d1;
-    box-shadow: 6px 6px 0 #1a63d1;
+    box-shadow: 5px 5px 0 #1a63d1;
     overflow: hidden;
     background: #bfe3fb;
 }
@@ -377,32 +380,32 @@ html, body {
 }
 .music-page-title {
     font-family: 'Baloo 2', sans-serif;
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     font-weight: 800;
     color: #0c3a70;
     margin: 0 0 2px;
 }
 .music-page-artist {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: #3d8fd9;
-    margin: 0 0 22px;
+    margin: 0 0 18px;
 }
 .music-page-controls {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 18px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 .play-btn-lg {
-    width: 62px;
-    height: 62px;
+    width: 56px;
+    height: 56px;
     border-radius: 9999px;
     background: #1a63d1;
     border: 3px solid #0c3a70;
     color: #ffffff;
-    font-size: 1.3rem;
+    font-size: 1.15rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -425,8 +428,8 @@ html, body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-top: 20px;
-    padding: 9px 16px;
+    margin-top: 16px;
+    padding: 8px 14px;
     background: #ffffff;
     border: 2.5px solid #1a63d1;
     border-radius: 9999px;
@@ -434,7 +437,7 @@ html, body {
     text-decoration: none;
     font-family: 'Baloo 2', sans-serif;
     font-weight: 700;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     box-shadow: 3px 3px 0 #1a63d1;
     transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
@@ -442,20 +445,126 @@ html, body {
     transform: translate(1px, 1px);
     box-shadow: 2px 2px 0 #1a63d1;
 }
+
+/* ============================================================
+   RESPONSIVE MEDIA QUERIES (Mobile and Short Viewports)
+   ============================================================ */
+@media (max-width: 480px), (max-height: 740px) {
+    .stage {
+        padding: 16px 12px;
+    }
+    .card-3d-wrap {
+        max-width: 335px;
+    }
+    .banner-wrap {
+        height: 85px;
+    }
+    .avatar-wrap {
+        width: 74px;
+        height: 74px;
+        margin: -37px auto 8px;
+    }
+    .avatar {
+        width: 74px;
+        height: 74px;
+    }
+    .avatar-decoration {
+        width: 94px;
+        height: 94px;
+        top: -10px;
+        left: -10px;
+    }
+    .display-name {
+        font-size: 1.25rem;
+    }
+    .handle {
+        font-size: 0.75rem;
+    }
+    .quote-box {
+        margin-top: 10px;
+        padding: 8px 10px;
+    }
+    .quote-box p.q {
+        font-size: 0.72rem;
+        line-height: 1.35;
+    }
+    .quote-box p.src {
+        font-size: 0.62rem;
+        margin-top: 3px;
+    }
+    .about {
+        margin-top: 10px;
+        font-size: 0.74rem;
+        line-height: 1.4;
+    }
+    .about .label {
+        font-size: 0.6rem;
+        margin-bottom: 2px;
+    }
+    .links {
+        margin-top: 12px;
+        gap: 6px;
+    }
+    .link-item {
+        padding: 8px 10px;
+        border-radius: 12px;
+    }
+    .link-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+    .link-title {
+        font-size: 0.78rem;
+    }
+    .link-sub {
+        font-size: 0.58rem;
+    }
+    
+    /* Music Card mobile tweaks */
+    .music-card-wrap {
+        max-width: 280px;
+    }
+    .music-card {
+        padding: 18px 16px 16px;
+    }
+    .music-art-wrap {
+        width: 130px;
+        height: 130px;
+        margin-bottom: 12px;
+    }
+    .music-page-title {
+        font-size: 1.05rem;
+    }
+    .music-page-artist {
+        font-size: 0.78rem;
+        margin-bottom: 12px;
+    }
+    .play-btn-lg {
+        width: 48px;
+        height: 48px;
+        font-size: 1rem;
+    }
+    .lyrics-link {
+        margin-top: 12px;
+        padding: 6px 12px;
+        font-size: 0.7rem;
+    }
+    .page-dots {
+        right: 10px;
+    }
+}
 </style>
 </head>
 <body>
 
-<!-- ENTRY OVERLAY -->
 <div class="entry-overlay" id="entryOverlay">
     <div class="entry-text">Click to Enter...</div>
 </div>
 
-<!-- PAGES -->
 <div class="snap-container">
 <div class="pager-track" id="pagerTrack">
 
-    <!-- Page 1: Profile -->
     <div class="snap-section" id="profilePage">
         <div class="stage">
             <div class="card-3d-wrap" id="cardWrap">
@@ -514,31 +623,32 @@ html, body {
         </div>
     </div>
 
-    <!-- Page 2: Music -->
     <div class="snap-section" id="musicPage">
-        <div class="music-card-wrap" id="musicCardWrap">
-            <div class="music-card-depth"></div>
-            <div class="music-card">
-                <div class="music-art-wrap">
-                    <img src="https://plain-enam-prod-public.komododecks.com/202607/15/QgOKvRFCBqwMT7M2ixB6/image.jpg" alt="Album art" id="musicArtImg">
+        <div class="stage">
+            <div class="music-card-wrap" id="musicCardWrap">
+                <div class="music-card-depth"></div>
+                <div class="music-card">
+                    <div class="music-art-wrap">
+                        <img src="https://plain-enam-prod-public.komododecks.com/202607/15/QgOKvRFCBqwMT7M2ixB6/image.jpg" alt="Album art" id="musicArtImg">
+                    </div>
+
+                    <h2 class="music-page-title">Make Me a Better Man</h2>
+                    <p class="music-page-artist">Malcolm Todd</p>
+
+                    <div class="music-page-controls">
+                        <button class="play-btn-lg" id="playBtn" aria-label="Play">
+                            <i class="fa-solid fa-play" id="playIcon"></i>
+                        </button>
+                    </div>
+
+                    <a href="https://genius.com/Malcolm-todd-make-me-a-better-man-lyrics" target="_blank" rel="noopener noreferrer" class="lyrics-link">
+                        <i class="fa-solid fa-align-left"></i> Lyrics on Genius
+                    </a>
+
+                    <audio id="bgAudio" loop preload="auto">
+                        <source src="https://www.image2url.com/r2/default/audio/1784083788643-18ef3d92-6016-464a-ba5e-3424a0f75f62.mp3" type="audio/mpeg">
+                    </audio>
                 </div>
-
-                <h2 class="music-page-title">Make Me a Better Man</h2>
-                <p class="music-page-artist">Malcolm Todd</p>
-
-                <div class="music-page-controls">
-                    <button class="play-btn-lg" id="playBtn" aria-label="Play">
-                        <i class="fa-solid fa-play" id="playIcon"></i>
-                    </button>
-                </div>
-
-                <a href="https://genius.com/Malcolm-todd-make-me-a-better-man-lyrics" target="_blank" rel="noopener noreferrer" class="lyrics-link">
-                    <i class="fa-solid fa-align-left"></i> Lyrics on Genius
-                </a>
-
-                <audio id="bgAudio" loop preload="auto">
-                    <source src="https://www.image2url.com/r2/default/audio/1784083788643-18ef3d92-6016-464a-ba5e-3424a0f75f62.mp3" type="audio/mpeg">
-                </audio>
             </div>
         </div>
     </div>
@@ -588,6 +698,13 @@ html, body {
     var avatarDecoration = document.getElementById('avatarDecoration');
     var discordActivity = document.getElementById('discordActivity');
 
+    /* Mobile Height Safe Fix (Addresses variable mobile browser UI heights) */
+    function resetHeight() {
+        document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
+    }
+    window.addEventListener('resize', resetHeight);
+    resetHeight();
+
     /* Entry Overlay */
     entryOverlay.addEventListener('click', function () {
         entryOverlay.classList.add('hide');
@@ -602,11 +719,21 @@ html, body {
     function goToPage(index) {
         currentPage = Math.max(0, Math.min(totalPages - 1, index));
         pagerTrack.style.transform = 'translateY(-' + (currentPage * 100) + 'vh)';
+        pagerTrack.style.transform = 'translateY(-' + (currentPage * calcPageHeight()) + 'px)';
         pageDots.forEach((dot, i) => dot.classList.toggle('active', i === currentPage));
         isAnimating = true;
         clearTimeout(goToPage._t);
         goToPage._t = setTimeout(() => isAnimating = false, 650);
     }
+
+    function calcPageHeight() {
+        return window.innerHeight;
+    }
+
+    // Overriding style calculations based on actual pixel viewport heights
+    window.addEventListener('resize', function() {
+        pagerTrack.style.transform = 'translateY(-' + (currentPage * calcPageHeight()) + 'px)';
+    });
 
     var wheelCooldown = false;
     window.addEventListener('wheel', function (e) {
@@ -635,14 +762,13 @@ html, body {
 
     pageDots.forEach(dot => dot.addEventListener('click', () => goToPage(parseInt(dot.dataset.page))));
 
-    /* LOCALIZED 3D TILT EFFECT (Hove-Only) */
+    /* LOCALIZED 3D TILT EFFECT (Hover-Only) */
     var profileTilt = { targetX: 0, targetY: 0, curX: 0, curY: 0 };
     var musicTilt = { targetX: 0, targetY: 0, curX: 0, curY: 0 };
 
     function bindTilt(element, stateObj) {
         element.addEventListener('mousemove', function (e) {
             var rect = element.getBoundingClientRect();
-            // Calculate mouse coordinates relative to the center of this specific card
             var x = (e.clientX - rect.left) / rect.width;
             var y = (e.clientY - rect.top) / rect.height;
             stateObj.targetX = x - 0.5;
@@ -650,7 +776,23 @@ html, body {
         });
 
         element.addEventListener('mouseleave', function () {
-            // Smoothly reset back to the exact center
+            stateObj.targetX = 0;
+            stateObj.targetY = 0;
+        });
+        
+        // Touch support for tilt
+        element.addEventListener('touchmove', function (e) {
+            var t = e.touches[0];
+            var rect = element.getBoundingClientRect();
+            var x = (t.clientX - rect.left) / rect.width;
+            var y = (t.clientY - rect.top) / rect.height;
+            if(x >= 0 && x <= 1 && y >= 0 && y <= 1) {
+                stateObj.targetX = x - 0.5;
+                stateObj.targetY = y - 0.5;
+            }
+        }, { passive: true });
+
+        element.addEventListener('touchend', function () {
             stateObj.targetX = 0;
             stateObj.targetY = 0;
         });
@@ -660,23 +802,21 @@ html, body {
     bindTilt(musicCardWrap, musicTilt);
 
     function animate() {
-        // Smoothly interpolate profile tilt
         profileTilt.curX += (profileTilt.targetX - profileTilt.curX) * 0.12;
         profileTilt.curY += (profileTilt.targetY - profileTilt.curY) * 0.12;
         
-        var profileRotY = profileTilt.curX * 22;
-        var profileRotX = profileTilt.curY * -22;
+        var profileRotY = profileTilt.curX * 18;
+        var profileRotX = profileTilt.curY * -18;
         cardWrap.style.transform = `rotateX(${profileRotX}deg) rotateY(${profileRotY}deg)`;
-        banner.style.transform = `translate(${profileTilt.curX * -18}px, ${profileTilt.curY * -14}px) scale(1.1)`;
+        banner.style.transform = `translate(${profileTilt.curX * -14}px, ${profileTilt.curY * -10}px) scale(1.1)`;
 
-        // Smoothly interpolate music tilt
         musicTilt.curX += (musicTilt.targetX - musicTilt.curX) * 0.12;
         musicTilt.curY += (musicTilt.targetY - musicTilt.curY) * 0.12;
 
-        var musicRotY = musicTilt.curX * 22;
-        var musicRotX = musicTilt.curY * -22;
+        var musicRotY = musicTilt.curX * 18;
+        var musicRotX = musicTilt.curY * -18;
         musicCardWrap.style.transform = `rotateX(${musicRotX}deg) rotateY(${musicRotY}deg)`;
-        musicArtImg.style.transform = `translate(${musicTilt.curX * -14}px, ${musicTilt.curY * -14}px) scale(1.08)`;
+        musicArtImg.style.transform = `translate(${musicTilt.curX * -10}px, ${musicTilt.curY * -10}px) scale(1.08)`;
 
         requestAnimationFrame(animate);
     }
