@@ -60,9 +60,9 @@ html, body {
     font-family: 'Baloo 2', sans-serif;
     font-weight: 800;
     font-size: 3.5rem;
-    color: #1a63d1;
+    color: #2e7d32; /* Rich Green */
     margin: 0 0 4px;
-    text-shadow: 4px 4px 0px #bfe3fb, 6px 6px 0px #0c3a70;
+    text-shadow: 4px 4px 0px #ffffff, 6px 6px 0px #1b5e20; /* White shadow with a Dark Green outline */
     letter-spacing: -0.02em;
     display: flex;
     align-items: center;
@@ -71,8 +71,8 @@ html, body {
 }
 .hub-logo i {
     font-size: 2.8rem;
-    color: #1a63d1;
-    filter: drop-shadow(3px 3px 0px #0c3a70);
+    color: #2e7d32; /* Green Leaf */
+    filter: drop-shadow(3px 3px 0px #1b5e20);
 }
 .hub-subtitle {
     font-size: 0.9rem;
@@ -1180,7 +1180,6 @@ html, body {
     bgAudio.addEventListener('pause', () => setPlayingState(false));
 
     function tryAutoplay() {
-        // Starts music if we enter the profile page via user interactions
         if (bgAudio.paused && snapContainer.classList.contains('revealed')) {
             bgAudio.play().then(() => {
                 setPlayingState(true);
