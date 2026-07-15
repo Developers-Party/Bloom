@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bloom</title>
+<title>TheGoodDeveloper • GitHub</title>
 
+<!-- Browser Icon (Favicon) -->
 <link rel="icon" type="image/png" href="https://plain-enam-prod-public.komododecks.com/202607/15/ZMyTp0DU1sb2sI4N80nr/image.png">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -133,7 +134,7 @@ html, body {
     width: 100%;
     max-width: 400px;
     transform-style: preserve-3d;
-    transition: transform 0.12s ease-out;
+    transition: transform 0.1s ease-out;
 }
 .card-depth {
     position: absolute;
@@ -171,6 +172,7 @@ html, body {
     height: calc(100% + 40px);
     object-fit: cover;
     will-change: transform;
+    transition: transform 0.1s ease-out;
 }
 .avatar-wrap {
     position: relative;
@@ -333,7 +335,7 @@ html, body {
     max-width: 340px;
     margin: 0 auto;
     transform-style: preserve-3d;
-    transition: transform 0.12s ease-out;
+    transition: transform 0.1s ease-out;
 }
 .music-card-depth {
     position: absolute;
@@ -371,6 +373,7 @@ html, body {
     object-fit: cover;
     display: block;
     will-change: transform;
+    transition: transform 0.1s ease-out;
 }
 .music-page-title {
     font-family: 'Baloo 2', sans-serif;
@@ -443,13 +446,16 @@ html, body {
 </head>
 <body>
 
+<!-- ENTRY OVERLAY -->
 <div class="entry-overlay" id="entryOverlay">
     <div class="entry-text">Click to Enter...</div>
 </div>
 
+<!-- PAGES -->
 <div class="snap-container">
 <div class="pager-track" id="pagerTrack">
 
+    <!-- Page 1: Profile -->
     <div class="snap-section" id="profilePage">
         <div class="stage">
             <div class="card-3d-wrap" id="cardWrap">
@@ -508,6 +514,7 @@ html, body {
         </div>
     </div>
 
+    <!-- Page 2: Music -->
     <div class="snap-section" id="musicPage">
         <div class="music-card-wrap" id="musicCardWrap">
             <div class="music-card-depth"></div>
@@ -628,20 +635,49 @@ html, body {
 
     pageDots.forEach(dot => dot.addEventListener('click', () => goToPage(parseInt(dot.dataset.page))));
 
-    /* 3D Tilt */
-    var targetX = 0, targetY = 0, curX = 0, curY = 0;
-    window.addEventListener('mousemove', e => {
-        targetX = (e.clientX / window.innerWidth) - 0.5;
-        targetY = (e.clientY / window.innerHeight) - 0.5;
-    });
+    /* LOCALIZED 3D TILT EFFECT (Hove-Only) */
+    var profileTilt = { targetX: 0, targetY: 0, curX: 0, curY: 0 };
+    var musicTilt = { targetX: 0, targetY: 0, curX: 0, curY: 0 };
+
+    function bindTilt(element, stateObj) {
+        element.addEventListener('mousemove', function (e) {
+            var rect = element.getBoundingClientRect();
+            // Calculate mouse coordinates relative to the center of this specific card
+            var x = (e.clientX - rect.left) / rect.width;
+            var y = (e.clientY - rect.top) / rect.height;
+            stateObj.targetX = x - 0.5;
+            stateObj.targetY = y - 0.5;
+        });
+
+        element.addEventListener('mouseleave', function () {
+            // Smoothly reset back to the exact center
+            stateObj.targetX = 0;
+            stateObj.targetY = 0;
+        });
+    }
+
+    bindTilt(cardWrap, profileTilt);
+    bindTilt(musicCardWrap, musicTilt);
+
     function animate() {
-        curX += (targetX - curX) * 0.08;
-        curY += (targetY - curY) * 0.08;
-        var rotY = curX * 22, rotX = curY * -22;
-        cardWrap.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-        musicCardWrap.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-        banner.style.transform = `translate(${curX*-18}px, ${curY*-14}px) scale(1.1)`;
-        musicArtImg.style.transform = `translate(${curX*-14}px, ${curY*-14}px) scale(1.08)`;
+        // Smoothly interpolate profile tilt
+        profileTilt.curX += (profileTilt.targetX - profileTilt.curX) * 0.12;
+        profileTilt.curY += (profileTilt.targetY - profileTilt.curY) * 0.12;
+        
+        var profileRotY = profileTilt.curX * 22;
+        var profileRotX = profileTilt.curY * -22;
+        cardWrap.style.transform = `rotateX(${profileRotX}deg) rotateY(${profileRotY}deg)`;
+        banner.style.transform = `translate(${profileTilt.curX * -18}px, ${profileTilt.curY * -14}px) scale(1.1)`;
+
+        // Smoothly interpolate music tilt
+        musicTilt.curX += (musicTilt.targetX - musicTilt.curX) * 0.12;
+        musicTilt.curY += (musicTilt.targetY - musicTilt.curY) * 0.12;
+
+        var musicRotY = musicTilt.curX * 22;
+        var musicRotX = musicTilt.curY * -22;
+        musicCardWrap.style.transform = `rotateX(${musicRotX}deg) rotateY(${musicRotY}deg)`;
+        musicArtImg.style.transform = `translate(${musicTilt.curX * -14}px, ${musicTilt.curY * -14}px) scale(1.08)`;
+
         requestAnimationFrame(animate);
     }
     animate();
