@@ -1119,6 +1119,18 @@ body.theme-pixel {
 (function () {
     "use strict";
 
+    /* Restore a pretty path (e.g. /Bloom/TheGoodDeveloper) that was
+       bounced through 404.html's redirect (see 404.html). Harmless
+       no-op if this query pattern isn't present. */
+    (function (l) {
+        if (l.search[1] === '/') {
+            var decoded = l.search.slice(1).split('&').map(function (s) {
+                return s.replace(/~and~/g, '&');
+            }).join('?');
+            window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
+        }
+    }(window.location));
+
     var SETTINGS_KEY = 'siteSettings';
 
     function loadSettings() {
@@ -1215,28 +1227,84 @@ body.theme-pixel {
 
     /* Hub Selection Triggers */
     devSelectCard.addEventListener('click', function () {
-        showUser('dev');
-        hubOverlay.classList.add('hide');
-        snapContainer.classList.add('revealed');
-        tryAutoplay(bgAudio);
+        applyRoute('dev', true);
     });
 
     pixelSelectCard.addEventListener('click', function () {
-        showUser('pixel');
-        hubOverlay.classList.add('hide');
-        snapContainer.classList.add('revealed');
-        tryAutoplay(bgAudio2);
+        applyRoute('pixel', true);
     });
 
     /* Back to Hub Trigger */
     backToHubBtn.addEventListener('click', function() {
+        applyRoute('hub', true);
+    });
+
+    /* ============================================================
+       URL ROUTING — reflects the current view in the address bar
+       as /Hub, /TheGoodDeveloper, /Pixel under wherever this page
+       is hosted (e.g. https://developers-party.github.io/Bloom/Hub)
+       ============================================================ */
+    var ROUTE_NAMES = { hub: 'Hub', dev: 'TheGoodDeveloper', pixel: 'Pixel' };
+
+    function getBasePath() {
+        var path = window.location.pathname;
+        var names = ['Hub', 'TheGoodDeveloper', 'Pixel'];
+        for (var i = 0; i < names.length; i++) {
+            var suffix = '/' + names[i];
+            if (path.endsWith(suffix)) {
+                return path.slice(0, path.length - names[i].length);
+            }
+        }
+        return path.endsWith('/') ? path : path + '/';
+    }
+
+    var basePath = getBasePath();
+
+    function routeFromPath() {
+        var path = window.location.pathname;
+        if (path.endsWith('/' + ROUTE_NAMES.dev)) return 'dev';
+        if (path.endsWith('/' + ROUTE_NAMES.pixel)) return 'pixel';
+        return 'hub';
+    }
+
+    function setRoute(route, push) {
+        var url = basePath + ROUTE_NAMES[route];
+        if (push) {
+            history.pushState({ route: route }, '', url);
+        } else {
+            history.replaceState({ route: route }, '', url);
+        }
+        document.title = route === 'hub' ? 'Bloom' : 'Bloom · ' + (route === 'dev' ? 'TheGoodDeveloper' : 'Pixel');
+    }
+
+    function showHubScreen() {
         snapContainer.classList.remove('revealed');
         hubOverlay.classList.remove('hide');
         bgAudio.pause();
         bgAudio2.pause();
         setPlayingState(playIcon, false);
         setPlayingState(playIcon2, false);
+    }
+
+    function applyRoute(route, push) {
+        if (route === 'hub') {
+            showHubScreen();
+        } else {
+            showUser(route);
+            hubOverlay.classList.add('hide');
+            snapContainer.classList.add('revealed');
+            tryAutoplay(route === 'dev' ? bgAudio : bgAudio2);
+        }
+        setRoute(route, push);
+    }
+
+    window.addEventListener('popstate', function (e) {
+        var route = (e.state && e.state.route) || routeFromPath();
+        applyRoute(route, false);
     });
+
+    /* Apply whatever route the page was loaded on */
+    applyRoute(routeFromPath(), false);
 
     /* Pager Navigation */
     var currentPage = 0;
