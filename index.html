@@ -28,7 +28,8 @@ html, body {
     color: #0c3a70;
     overflow: hidden;
     background: linear-gradient(180deg, #ffffff 0%, #eaf6ff 55%, #bfe3fb 100%);
-    overscroll-behavior-y: contain; 
+    overscroll-behavior-y: contain;
+    transition: background 0.5s ease, color 0.5s ease;
 }
 
 /* ============================================================
@@ -92,6 +93,7 @@ html, body {
     width: 100%;
     max-width: 1000px;
     perspective: 1000px;
+    flex-wrap: wrap;
 }
 
 /* Selectable Profile Card Styles */
@@ -131,6 +133,27 @@ html, body {
 .user-select-card:hover .user-glass {
     background: linear-gradient(180deg, #ffffff 0%, #f5faff 70%, #edf7ff 100%);
 }
+
+/* Green/Black variant used for Pixel's hub card */
+.user-select-card.theme-green-black .user-card-depth {
+    background: #16a34a;
+    box-shadow: 0 15px 35px rgba(22, 163, 74, 0.2);
+}
+.user-select-card.theme-green-black .user-glass {
+    background: linear-gradient(180deg, #0d1f13 0%, #051608 70%, #000000 100%);
+    border-color: #22c55e;
+}
+.user-select-card.theme-green-black:hover .user-glass {
+    background: linear-gradient(180deg, #10250f 0%, #071c0c 70%, #000000 100%);
+}
+.user-select-card.theme-green-black .user-name { color: #eafff0; }
+.user-select-card.theme-green-black .user-role { color: #4ade80; }
+.user-select-card.theme-green-black .user-avatar { border-color: #22c55e; }
+.user-select-card.theme-green-black .user-badge {
+    background: #16a34a;
+    border-color: #000000;
+}
+
 .user-avatar-wrap {
     position: relative;
     width: 110px;
@@ -268,7 +291,7 @@ html, body {
     color: #0c3a70;
     cursor: pointer;
     box-shadow: 3px 3px 0 #1a63d1;
-    transition: transform 0.1s, box-shadow 0.1s;
+    transition: transform 0.1s, box-shadow 0.1s, background 0.2s, border-color 0.2s, color 0.2s;
 }
 .back-hub-btn:hover {
     transform: translate(1px, 1px);
@@ -296,7 +319,7 @@ html, body {
     border-radius: 26px;
     transform: translateZ(-14px);
     box-shadow: 0 20px 40px rgba(26, 99, 209, 0.15);
-    transition: box-shadow 0.15s ease;
+    transition: box-shadow 0.15s ease, background 0.2s ease;
 }
 .glass-card {
     width: 100%;
@@ -307,6 +330,7 @@ html, body {
     position: relative;
     overflow: hidden;
     transform: translateZ(0px);
+    transition: background 0.2s ease, border-color 0.2s ease;
 }
 .card-body {
     padding: 0 24px 24px;
@@ -318,6 +342,7 @@ html, body {
     overflow: hidden;
     border-bottom: 3.5px solid #1a63d1;
     background: #bfe3fb;
+    transition: border-color 0.2s ease;
 }
 .banner-img {
     position: absolute;
@@ -344,6 +369,7 @@ html, body {
     display: block;
     background: #fff;
     box-shadow: 0 8px 24px rgba(26, 99, 209, 0.2);
+    transition: border-color 0.2s ease;
 }
 .avatar-decoration {
     position: absolute;
@@ -371,12 +397,14 @@ html, body {
     letter-spacing: -0.01em;
     margin: 4px 0 2px;
     color: #0c3a70;
+    transition: color 0.2s ease;
 }
 .handle {
     color: #3d8fd9;
     font-size: 0.82rem;
     font-weight: 600;
     margin: 0;
+    transition: color 0.2s ease;
 }
 .quote-box {
     margin-top: 14px;
@@ -386,6 +414,7 @@ html, body {
     border-radius: 14px;
     text-align: left;
     box-shadow: 4px 4px 0 #1a63d1;
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .quote-box p.q {
     font-style: italic;
@@ -408,6 +437,7 @@ html, body {
     color: #0c3a70;
     line-height: 1.5;
     font-weight: 500;
+    transition: color 0.2s ease;
 }
 .about .label {
     display: block;
@@ -435,7 +465,7 @@ html, body {
     box-shadow: 4px 4px 0 #1a63d1;
     text-decoration: none;
     color: #0c3a70;
-    transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease, border-color 0.2s ease;
 }
 .link-item:hover {
     background: #eaf6ff;
@@ -458,6 +488,7 @@ html, body {
     background: #bfe3fb;
     border: 2px solid #1a63d1;
     color: #0c3a70;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 .link-icon-img {
     padding: 0;
@@ -472,7 +503,7 @@ html, body {
 }
 .link-text { flex: 1; text-align: left; min-width: 0; }
 .link-title { font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 0.85rem; line-height: 1.2; }
-.link-sub { font-size: 0.65rem; color: #3d8fd9; margin-top: 1px; font-weight: 600; }
+.link-sub { font-size: 0.65rem; color: #3d8fd9; margin-top: 1px; font-weight: 600; transition: color 0.2s ease; }
 .link-arrow {
     color: #0c3a70;
     font-size: 0.75rem;
@@ -500,7 +531,7 @@ html, body {
     border-radius: 28px;
     transform: translateZ(-14px);
     box-shadow: 0 20px 40px rgba(26, 99, 209, 0.15);
-    transition: box-shadow 0.15s ease;
+    transition: box-shadow 0.15s ease, background 0.2s ease;
 }
 .music-card {
     position: relative;
@@ -510,6 +541,7 @@ html, body {
     padding: 26px 22px 22px;
     text-align: center;
     transform: translateZ(0px);
+    transition: background 0.2s ease, border-color 0.2s ease;
 }
 .music-art-wrap {
     position: relative;
@@ -521,6 +553,7 @@ html, body {
     box-shadow: 5px 5px 0 #1a63d1;
     overflow: hidden;
     background: #bfe3fb;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .music-art-wrap img {
     position: absolute;
@@ -539,12 +572,14 @@ html, body {
     font-weight: 800;
     color: #0c3a70;
     margin: 0 0 2px;
+    transition: color 0.2s ease;
 }
 .music-page-artist {
     font-size: 0.85rem;
     font-weight: 600;
     color: #3d8fd9;
     margin: 0 0 18px;
+    transition: color 0.2s ease;
 }
 .music-page-controls {
     display: flex;
@@ -566,7 +601,7 @@ html, body {
     justify-content: center;
     cursor: pointer;
     box-shadow: 4px 4px 0 #0c3a70;
-    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease, border-color 0.2s ease;
 }
 .play-btn-lg:hover {
     transform: translate(1px, 1px);
@@ -576,7 +611,7 @@ html, body {
     transform: translate(4px, 4px);
     box-shadow: 0 0 0 #0c3a70;
 }
-.play-btn-lg #playIcon.fa-play {
+.play-btn-lg #playIcon.fa-play, .play-btn-lg #playIcon2.fa-play {
     margin-left: 3px;
 }
 .lyrics-link {
@@ -594,7 +629,7 @@ html, body {
     font-weight: 700;
     font-size: 0.75rem;
     box-shadow: 3px 3px 0 #1a63d1;
-    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 .lyrics-link:hover {
     transform: translate(1px, 1px);
@@ -622,6 +657,77 @@ html, body {
     transform: translate(3px, 3px);
     box-shadow: 1px 1px 0 #0c3a70;
 }
+
+/* ============================================================
+   PIXEL THEME (Green & Black) — applied to <body> while
+   viewing Pixel's profile / music pages
+   ============================================================ */
+body.theme-pixel {
+    background: linear-gradient(180deg, #000000 0%, #06210f 55%, #0b3a1c 100%);
+    color: #eafff0;
+}
+.theme-pixel .card-depth,
+.theme-pixel .music-card-depth {
+    background: #16a34a;
+    box-shadow: 0 20px 40px rgba(22, 163, 74, 0.25);
+}
+.theme-pixel .glass-card,
+.theme-pixel .music-card {
+    background: linear-gradient(180deg, #0d1f13 0%, #051608 70%, #000000 100%);
+    border-color: #22c55e;
+}
+.theme-pixel .banner-wrap { border-color: #22c55e; }
+.theme-pixel .avatar { border-color: #22c55e; }
+.theme-pixel .display-name, .theme-pixel .music-page-title { color: #eafff0; }
+.theme-pixel .handle, .theme-pixel .music-page-artist, .theme-pixel .about .label,
+.theme-pixel .link-sub, .theme-pixel .quote-box p.src { color: #4ade80; }
+.theme-pixel .about { color: #d7ffe4; }
+.theme-pixel .quote-box {
+    background: rgba(10, 40, 20, 0.6);
+    border-color: #22c55e;
+    box-shadow: 4px 4px 0 #16a34a;
+}
+.theme-pixel .quote-box p.q { color: #eafff0; }
+.theme-pixel .link-item {
+    background: #0b1f10;
+    border-color: #22c55e;
+    box-shadow: 4px 4px 0 #16a34a;
+    color: #eafff0;
+}
+.theme-pixel .link-item:hover { background: #123018; }
+.theme-pixel .link-icon {
+    background: #123018;
+    border-color: #22c55e;
+    color: #eafff0;
+}
+.theme-pixel .link-icon-img { background: #051608; }
+.theme-pixel .link-arrow { color: #eafff0; }
+.theme-pixel .music-art-wrap {
+    border-color: #22c55e;
+    box-shadow: 5px 5px 0 #16a34a;
+}
+.theme-pixel .play-btn-lg {
+    background: #16a34a;
+    border-color: #000000;
+    box-shadow: 4px 4px 0 #000000;
+}
+.theme-pixel .lyrics-link {
+    background: #0b1f10;
+    border-color: #22c55e;
+    color: #eafff0;
+    box-shadow: 3px 3px 0 #16a34a;
+}
+.theme-pixel .back-hub-btn {
+    background: #0b1f10;
+    border-color: #22c55e;
+    color: #eafff0;
+    box-shadow: 3px 3px 0 #16a34a;
+}
+.theme-pixel .page-dot {
+    background: #123018;
+    border-color: #22c55e;
+}
+.theme-pixel .page-dot.active { background: #16a34a; }
 
 /* ============================================================
    RESPONSIVE MEDIA QUERIES (Mobile and Short Viewports)
@@ -726,7 +832,7 @@ html, body {
     .link-sub {
         font-size: 0.58rem;
     }
-    
+
     /* Music Card mobile tweaks */
     .music-card-wrap {
         max-width: 280px;
@@ -785,6 +891,19 @@ html, body {
                 <p class="user-role">VR Developer</p>
             </div>
         </div>
+
+        <!-- Pixel Selection Card -->
+        <div class="user-select-card theme-green-black" id="pixelSelectCard">
+            <div class="user-card-depth" id="hubCardDepth2"></div>
+            <div class="user-glass">
+                <span class="user-badge">Member</span>
+                <div class="user-avatar-wrap">
+                    <img src="https://kommodo.ai/i/kaQ8sr22YxCoVRWLj6za" alt="Pixel" class="user-avatar">
+                </div>
+                <h3 class="user-name">Pixel</h3>
+                <p class="user-role">@pixel_lol3</p>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -795,7 +914,7 @@ html, body {
 <div class="snap-container">
 <div class="pager-track" id="pagerTrack">
 
-    <!-- Page 1: Profile -->
+    <!-- Page 1: Profile (TheGoodDeveloper) -->
     <div class="snap-section" id="profilePage">
         <div class="stage">
             <div class="card-3d-wrap" id="cardWrap">
@@ -855,7 +974,7 @@ html, body {
         </div>
     </div>
 
-    <!-- Page 2: Music -->
+    <!-- Page 2: Music (TheGoodDeveloper) -->
     <div class="snap-section" id="musicPage">
         <div class="stage">
             <div class="music-card-wrap" id="musicCardWrap">
@@ -884,6 +1003,92 @@ html, body {
                 </div>
             </div>
             <button class="gyro-btn" id="musicGyroBtn"><i class="fa-solid fa-mobile-screen-button"></i> Enable Tilt Effect</button>
+        </div>
+    </div>
+
+    <!-- Page 3: Profile (Pixel) -->
+    <div class="snap-section" id="profilePage2" style="display:none;">
+        <div class="stage">
+            <div class="card-3d-wrap" id="cardWrap2">
+                <div class="card-depth" id="profileDepth2"></div>
+                <div class="glass-card">
+                    <div class="banner-wrap">
+                        <img src="https://kommodo.ai/i/ftCeVKwYq3AyrrPM95FV" alt="Banner" class="banner-img" id="banner2">
+                    </div>
+                    <div class="card-body">
+                        <div class="avatar-wrap">
+                            <img src="https://kommodo.ai/i/kaQ8sr22YxCoVRWLj6za" alt="Avatar" class="avatar">
+                            <img src="" alt="" class="avatar-decoration" id="avatarDecoration2">
+                        </div>
+                        <h1 class="display-name">Pixel</h1>
+                        <p class="handle">@pixel_lol3</p>
+
+                        <p class="discord-activity" id="discordActivity2"></p>
+
+                        <div class="about">
+                            <span class="label">ABOUT ME</span>
+                            supercalifragilisticexpialidocious
+                        </div>
+
+                        <div class="links">
+                            <a href="https://www.tiktok.com/@pixeldagoat" class="link-item" target="_blank" rel="noopener noreferrer">
+                                <div class="link-icon">
+                                    <i class="fa-brands fa-tiktok"></i>
+                                </div>
+                                <div class="link-text">
+                                    <div class="link-title">TikTok</div>
+                                    <div class="link-sub">@pixeldagoat</div>
+                                </div>
+                                <i class="fa-solid fa-arrow-right link-arrow"></i>
+                            </a>
+
+                            <a href="https://guns.lol/pixel_is_real" class="link-item" target="_blank" rel="noopener noreferrer">
+                                <div class="link-icon">
+                                    <i class="fa-solid fa-link"></i>
+                                </div>
+                                <div class="link-text">
+                                    <div class="link-title">Guns.lol</div>
+                                    <div class="link-sub">All my links</div>
+                                </div>
+                                <i class="fa-solid fa-arrow-right link-arrow"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="gyro-btn" id="profileGyroBtn2"><i class="fa-solid fa-mobile-screen-button"></i> Enable Tilt Effect</button>
+        </div>
+    </div>
+
+    <!-- Page 4: Music (Pixel) -->
+    <div class="snap-section" id="musicPage2" style="display:none;">
+        <div class="stage">
+            <div class="music-card-wrap" id="musicCardWrap2">
+                <div class="music-card-depth" id="musicDepth2"></div>
+                <div class="music-card">
+                    <div class="music-art-wrap">
+                        <img src="https://kommodo.ai/i/EFeA3oYZ1hcOCTOlwmRa" alt="Album art" id="musicArtImg2">
+                    </div>
+
+                    <h2 class="music-page-title">Larping the Rooms</h2>
+                    <p class="music-page-artist">The Larping Tombstone</p>
+
+                    <div class="music-page-controls">
+                        <button class="play-btn-lg" id="playBtn2" aria-label="Play">
+                            <i class="fa-solid fa-play" id="playIcon2"></i>
+                        </button>
+                    </div>
+
+                    <a href="https://genius.com/search?q=Larping%20the%20Rooms%20The%20Larping%20Tombstone" target="_blank" rel="noopener noreferrer" class="lyrics-link">
+                        <i class="fa-solid fa-align-left"></i> Lyrics on Genius
+                    </a>
+
+                    <audio id="bgAudio2" loop preload="auto">
+                        <source src="https://www.image2url.com/r2/default/audio/1784143680967-e9d21cfd-50c9-46b6-a35d-a92515183e9a.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+            </div>
+            <button class="gyro-btn" id="musicGyroBtn2"><i class="fa-solid fa-mobile-screen-button"></i> Enable Tilt Effect</button>
         </div>
     </div>
 
@@ -917,29 +1122,50 @@ html, body {
     /* Elements */
     var hubOverlay = document.getElementById('hubOverlay');
     var devSelectCard = document.getElementById('devSelectCard');
+    var pixelSelectCard = document.getElementById('pixelSelectCard');
     var hubCardDepth = document.getElementById('hubCardDepth');
+    var hubCardDepth2 = document.getElementById('hubCardDepth2');
     var backToHubBtn = document.getElementById('backToHubBtn');
 
     var snapContainer = document.querySelector('.snap-container');
     var pagerTrack = document.getElementById('pagerTrack');
     var pageDots = document.querySelectorAll('.page-dot');
 
+    // TheGoodDeveloper elements
+    var profilePage = document.getElementById('profilePage');
+    var musicPage = document.getElementById('musicPage');
     var cardWrap = document.getElementById('cardWrap');
     var banner = document.getElementById('banner');
     var profileDepth = document.getElementById('profileDepth');
     var musicCardWrap = document.getElementById('musicCardWrap');
     var musicArtImg = document.getElementById('musicArtImg');
     var musicDepth = document.getElementById('musicDepth');
-
     var bgAudio = document.getElementById('bgAudio');
     var playBtn = document.getElementById('playBtn');
     var playIcon = document.getElementById('playIcon');
-
     var avatarDecoration = document.getElementById('avatarDecoration');
     var discordActivity = document.getElementById('discordActivity');
-
     var profileGyroBtn = document.getElementById('profileGyroBtn');
     var musicGyroBtn = document.getElementById('musicGyroBtn');
+
+    // Pixel elements
+    var profilePage2 = document.getElementById('profilePage2');
+    var musicPage2 = document.getElementById('musicPage2');
+    var cardWrap2 = document.getElementById('cardWrap2');
+    var banner2 = document.getElementById('banner2');
+    var profileDepth2 = document.getElementById('profileDepth2');
+    var musicCardWrap2 = document.getElementById('musicCardWrap2');
+    var musicArtImg2 = document.getElementById('musicArtImg2');
+    var musicDepth2 = document.getElementById('musicDepth2');
+    var bgAudio2 = document.getElementById('bgAudio2');
+    var playBtn2 = document.getElementById('playBtn2');
+    var playIcon2 = document.getElementById('playIcon2');
+    var avatarDecoration2 = document.getElementById('avatarDecoration2');
+    var discordActivity2 = document.getElementById('discordActivity2');
+    var profileGyroBtn2 = document.getElementById('profileGyroBtn2');
+    var musicGyroBtn2 = document.getElementById('musicGyroBtn2');
+
+    var allGyroBtns = [profileGyroBtn, musicGyroBtn, profileGyroBtn2, musicGyroBtn2];
 
     /* Mobile Height Safe Fix */
     function resetHeight() {
@@ -948,18 +1174,53 @@ html, body {
     window.addEventListener('resize', resetHeight);
     resetHeight();
 
-    /* Hub Selection Trigger */
+    /* Active user + page swap */
+    var activeUser = 'dev';
+
+    function showUser(name) {
+        activeUser = name;
+        var isPixel = name === 'pixel';
+
+        profilePage.style.display = isPixel ? 'none' : '';
+        musicPage.style.display = isPixel ? 'none' : '';
+        profilePage2.style.display = isPixel ? '' : 'none';
+        musicPage2.style.display = isPixel ? '' : 'none';
+
+        document.body.classList.toggle('theme-pixel', isPixel);
+
+        bgAudio.pause();
+        bgAudio2.pause();
+        setPlayingState(playIcon, false);
+        setPlayingState(playIcon2, false);
+
+        currentPage = 0;
+        pagerTrack.style.transform = 'translateY(0px)';
+        pageDots.forEach((dot, i) => dot.classList.toggle('active', i === 0));
+    }
+
+    /* Hub Selection Triggers */
     devSelectCard.addEventListener('click', function () {
+        showUser('dev');
         hubOverlay.classList.add('hide');
         snapContainer.classList.add('revealed');
-        goToPage(0); // Load Page 1
+        tryAutoplay(bgAudio);
+    });
+
+    pixelSelectCard.addEventListener('click', function () {
+        showUser('pixel');
+        hubOverlay.classList.add('hide');
+        snapContainer.classList.add('revealed');
+        tryAutoplay(bgAudio2);
     });
 
     /* Back to Hub Trigger */
     backToHubBtn.addEventListener('click', function() {
         snapContainer.classList.remove('revealed');
         hubOverlay.classList.remove('hide');
-        bgAudio.pause(); // Pause music when returning to hub
+        bgAudio.pause();
+        bgAudio2.pause();
+        setPlayingState(playIcon, false);
+        setPlayingState(playIcon2, false);
     });
 
     /* Pager Navigation */
@@ -1017,8 +1278,11 @@ html, body {
 
     /* PARALLAX CONTROLLERS */
     var hubTilt = { targetX: 0, targetY: 0, curX: 0, curY: 0 };
+    var hubTilt2 = { targetX: 0, targetY: 0, curX: 0, curY: 0 };
     var profileTilt = { targetX: 0, targetY: 0, curX: 0, curY: 0 };
     var musicTilt = { targetX: 0, targetY: 0, curX: 0, curY: 0 };
+    var profileTilt2 = { targetX: 0, targetY: 0, curX: 0, curY: 0 };
+    var musicTilt2 = { targetX: 0, targetY: 0, curX: 0, curY: 0 };
     var isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
     var gyroActive = false;
 
@@ -1028,7 +1292,7 @@ html, body {
 
     function bindTilt(element, stateObj) {
         element.addEventListener('mousemove', function (e) {
-            if (gyroActive) return; 
+            if (gyroActive) return;
             var rect = element.getBoundingClientRect();
             var x = (e.clientX - rect.left) / rect.width;
             var y = (e.clientY - rect.top) / rect.height;
@@ -1044,15 +1308,18 @@ html, body {
     }
 
     bindTilt(devSelectCard, hubTilt);
+    bindTilt(pixelSelectCard, hubTilt2);
     bindTilt(cardWrap, profileTilt);
     bindTilt(musicCardWrap, musicTilt);
+    bindTilt(cardWrap2, profileTilt2);
+    bindTilt(musicCardWrap2, musicTilt2);
 
     /* Gyroscope Orientation Logic */
     function handleOrientation(event) {
         if (!gyroActive) return;
 
-        var beta = event.beta;   
-        var gamma = event.gamma; 
+        var beta = event.beta;
+        var gamma = event.gamma;
 
         if (beta === null || gamma === null) return;
 
@@ -1064,7 +1331,7 @@ html, body {
         var deltaBeta = beta - initialBeta;
         var deltaGamma = gamma - initialGamma;
 
-        var maxOffsetRange = 24; 
+        var maxOffsetRange = 24;
         deltaBeta = Math.max(-maxOffsetRange, Math.min(maxOffsetRange, deltaBeta));
         deltaGamma = Math.max(-maxOffsetRange, Math.min(maxOffsetRange, deltaGamma));
 
@@ -1074,12 +1341,20 @@ html, body {
         // Apply universally to all cards
         hubTilt.targetX = normX * 0.5;
         hubTilt.targetY = normY * 0.5;
+        hubTilt2.targetX = normX * 0.5;
+        hubTilt2.targetY = normY * 0.5;
 
         profileTilt.targetX = normX * 0.5;
         profileTilt.targetY = normY * 0.5;
 
         musicTilt.targetX = normX * 0.5;
         musicTilt.targetY = normY * 0.5;
+
+        profileTilt2.targetX = normX * 0.5;
+        profileTilt2.targetY = normY * 0.5;
+
+        musicTilt2.targetX = normX * 0.5;
+        musicTilt2.targetY = normY * 0.5;
     }
 
     /* Gyro Permission Check */
@@ -1104,8 +1379,7 @@ html, body {
     function checkGyroPermissionsNeeded() {
         if (isMobile && typeof DeviceOrientationEvent !== 'undefined') {
             if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-                profileGyroBtn.style.display = 'inline-block';
-                musicGyroBtn.style.display = 'inline-block';
+                allGyroBtns.forEach(function (btn) { btn.style.display = 'inline-block'; });
             } else {
                 gyroActive = true;
                 window.addEventListener('deviceorientation', handleOrientation);
@@ -1114,17 +1388,15 @@ html, body {
     }
 
     function hideGyroButtons() {
-        profileGyroBtn.style.display = 'none';
-        musicGyroBtn.style.display = 'none';
+        allGyroBtns.forEach(function (btn) { btn.style.display = 'none'; });
     }
 
-    profileGyroBtn.addEventListener('click', initGyroscope);
-    musicGyroBtn.addEventListener('click', initGyroscope);
+    allGyroBtns.forEach(function (btn) { btn.addEventListener('click', initGyroscope); });
 
     checkGyroPermissionsNeeded();
 
     function animate() {
-        // Hub Card Animation
+        // Hub Card Animation (dev)
         hubTilt.curX += (hubTilt.targetX - hubTilt.curX) * 0.12;
         hubTilt.curY += (hubTilt.targetY - hubTilt.curY) * 0.12;
         var hubRotY = hubTilt.curX * 18;
@@ -1132,7 +1404,15 @@ html, body {
         devSelectCard.style.transform = `rotateX(${hubRotX}deg) rotateY(${hubRotY}deg)`;
         hubCardDepth.style.boxShadow = `${hubTilt.curX * -12}px ${hubTilt.curY * 12}px 30px rgba(26, 99, 209, 0.18)`;
 
-        // Profile Card Animation
+        // Hub Card Animation (pixel)
+        hubTilt2.curX += (hubTilt2.targetX - hubTilt2.curX) * 0.12;
+        hubTilt2.curY += (hubTilt2.targetY - hubTilt2.curY) * 0.12;
+        var hubRotY2 = hubTilt2.curX * 18;
+        var hubRotX2 = hubTilt2.curY * -18;
+        pixelSelectCard.style.transform = `rotateX(${hubRotX2}deg) rotateY(${hubRotY2}deg)`;
+        hubCardDepth2.style.boxShadow = `${hubTilt2.curX * -12}px ${hubTilt2.curY * 12}px 30px rgba(22, 163, 74, 0.25)`;
+
+        // Profile Card Animation (dev)
         profileTilt.curX += (profileTilt.targetX - profileTilt.curX) * 0.12;
         profileTilt.curY += (profileTilt.targetY - profileTilt.curY) * 0.12;
         var profileRotY = profileTilt.curX * 18;
@@ -1141,7 +1421,7 @@ html, body {
         banner.style.transform = `translate(${profileTilt.curX * -14}px, ${profileTilt.curY * -10}px) scale(1.1)`;
         profileDepth.style.boxShadow = `${profileTilt.curX * -12}px ${profileTilt.curY * 12}px 30px rgba(26, 99, 209, 0.18)`;
 
-        // Music Card Animation
+        // Music Card Animation (dev)
         musicTilt.curX += (musicTilt.targetX - musicTilt.curX) * 0.12;
         musicTilt.curY += (musicTilt.targetY - musicTilt.curY) * 0.12;
         var musicRotY = musicTilt.curX * 18;
@@ -1150,68 +1430,101 @@ html, body {
         musicArtImg.style.transform = `translate(${musicTilt.curX * -10}px, ${musicTilt.curY * -10}px) scale(1.08)`;
         musicDepth.style.boxShadow = `${musicTilt.curX * -12}px ${musicTilt.curY * 12}px 30px rgba(26, 99, 209, 0.18)`;
 
+        // Profile Card Animation (pixel)
+        profileTilt2.curX += (profileTilt2.targetX - profileTilt2.curX) * 0.12;
+        profileTilt2.curY += (profileTilt2.targetY - profileTilt2.curY) * 0.12;
+        var profileRotY2 = profileTilt2.curX * 18;
+        var profileRotX2 = profileTilt2.curY * -18;
+        cardWrap2.style.transform = `rotateX(${profileRotX2}deg) rotateY(${profileRotY2}deg)`;
+        banner2.style.transform = `translate(${profileTilt2.curX * -14}px, ${profileTilt2.curY * -10}px) scale(1.1)`;
+        profileDepth2.style.boxShadow = `${profileTilt2.curX * -12}px ${profileTilt2.curY * 12}px 30px rgba(22, 163, 74, 0.25)`;
+
+        // Music Card Animation (pixel)
+        musicTilt2.curX += (musicTilt2.targetX - musicTilt2.curX) * 0.12;
+        musicTilt2.curY += (musicTilt2.targetY - musicTilt2.curY) * 0.12;
+        var musicRotY2 = musicTilt2.curX * 18;
+        var musicRotX2 = musicTilt2.curY * -18;
+        musicCardWrap2.style.transform = `rotateX(${musicRotX2}deg) rotateY(${musicRotY2}deg)`;
+        musicArtImg2.style.transform = `translate(${musicTilt2.curX * -10}px, ${musicTilt2.curY * -10}px) scale(1.08)`;
+        musicDepth2.style.boxShadow = `${musicTilt2.curX * -12}px ${musicTilt2.curY * 12}px 30px rgba(22, 163, 74, 0.25)`;
+
         requestAnimationFrame(animate);
     }
     animate();
 
     /* Music Setup */
     bgAudio.volume = settings.volume / 100;
+    bgAudio2.volume = settings.volume / 100;
 
-    function setPlayingState(isPlaying) {
+    function setPlayingState(iconEl, isPlaying) {
         if (isPlaying) {
-            playIcon.classList.remove('fa-play');
-            playIcon.classList.add('fa-pause');
+            iconEl.classList.remove('fa-play');
+            iconEl.classList.add('fa-pause');
         } else {
-            playIcon.classList.remove('fa-pause');
-            playIcon.classList.add('fa-play');
+            iconEl.classList.remove('fa-pause');
+            iconEl.classList.add('fa-play');
         }
     }
 
     playBtn.addEventListener('click', () => {
         if (bgAudio.paused) {
-            bgAudio.play().then(() => {
-                setPlayingState(true);
-            }).catch(() => {});
+            bgAudio.play().then(() => setPlayingState(playIcon, true)).catch(() => {});
         } else {
             bgAudio.pause();
-            setPlayingState(false);
+            setPlayingState(playIcon, false);
         }
     });
+    bgAudio.addEventListener('play', () => setPlayingState(playIcon, true));
+    bgAudio.addEventListener('pause', () => setPlayingState(playIcon, false));
 
-    bgAudio.addEventListener('play', () => setPlayingState(true));
-    bgAudio.addEventListener('pause', () => setPlayingState(false));
+    playBtn2.addEventListener('click', () => {
+        if (bgAudio2.paused) {
+            bgAudio2.play().then(() => setPlayingState(playIcon2, true)).catch(() => {});
+        } else {
+            bgAudio2.pause();
+            setPlayingState(playIcon2, false);
+        }
+    });
+    bgAudio2.addEventListener('play', () => setPlayingState(playIcon2, true));
+    bgAudio2.addEventListener('pause', () => setPlayingState(playIcon2, false));
 
-    function tryAutoplay() {
-        if (bgAudio.paused && snapContainer.classList.contains('revealed')) {
-            bgAudio.play().then(() => {
-                setPlayingState(true);
+    function tryAutoplay(audioEl) {
+        if (audioEl.paused && snapContainer.classList.contains('revealed')) {
+            audioEl.play().then(() => {
+                setPlayingState(audioEl === bgAudio ? playIcon : playIcon2, true);
             }).catch(() => {});
         }
     }
-    devSelectCard.addEventListener('click', tryAutoplay);
 
     /* Discord Presence */
     var DISCORD_ID = '995829502548656169';
-    function updateDiscordPresence() {
-        fetch('https://api.lanyard.rest/v1/users/' + DISCORD_ID)
+    var DISCORD_ID_PIXEL = '1477115874623357153';
+
+    function fetchPresence(discordId, decoEl, actEl) {
+        fetch('https://api.lanyard.rest/v1/users/' + discordId)
             .then(r => r.json())
             .then(res => {
                 if (!res.success) return;
                 var d = res.data;
                 var deco = d.discord_user?.avatar_decoration_data?.asset;
-                avatarDecoration.src = deco ? `https://cdn.discordapp.com/avatar-decoration-presets/${deco}.png` : '';
-                avatarDecoration.style.display = deco ? 'block' : 'none';
+                decoEl.src = deco ? `https://cdn.discordapp.com/avatar-decoration-presets/${deco}.png` : '';
+                decoEl.style.display = deco ? 'block' : 'none';
 
                 if (d.listening_to_spotify && d.spotify) {
-                    discordActivity.textContent = `🎧 ${d.spotify.song} — ${d.spotify.artist}`;
-                    discordActivity.style.display = 'flex';
+                    actEl.textContent = `🎧 ${d.spotify.song} — ${d.spotify.artist}`;
+                    actEl.style.display = 'flex';
                 } else {
                     var act = (d.activities || []).find(a => a.type !== 4);
-                    discordActivity.textContent = act ? `🎮 ${act.name}` : '';
-                    discordActivity.style.display = act ? 'flex' : 'none';
+                    actEl.textContent = act ? `🎮 ${act.name}` : '';
+                    actEl.style.display = act ? 'flex' : 'none';
                 }
             })
             .catch(() => {});
+    }
+
+    function updateDiscordPresence() {
+        fetchPresence(DISCORD_ID, avatarDecoration, discordActivity);
+        fetchPresence(DISCORD_ID_PIXEL, avatarDecoration2, discordActivity2);
     }
     updateDiscordPresence();
     setInterval(updateDiscordPresence, 20000);
