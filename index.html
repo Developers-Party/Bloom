@@ -54,7 +54,7 @@ html, body {
 }
 .user-card-depth {
     position: absolute; inset: 0; background: #1a63d1; border-radius: 26px;
-    transform: translateZ(-14px); box-shadow: 0 15px 35px rgba(26, 99, 209, 0.12);
+    transform: translateZ(-14px);
     transition: box-shadow 0.15s ease;
 }
 .user-glass {
@@ -69,7 +69,7 @@ html, body {
     background: linear-gradient(180deg, #ffffff 0%, #f5faff 70%, #edf7ff 100%);
 }
 .user-select-card.theme-green-black .user-card-depth {
-    background: #16a34a; box-shadow: 0 15px 35px rgba(22, 163, 74, 0.2);
+    background: #16a34a;
 }
 .user-select-card.theme-green-black .user-glass {
     background: linear-gradient(180deg, #0d1f13 0%, #051608 70%, #000000 100%);
@@ -83,7 +83,7 @@ html, body {
 .user-select-card.theme-green-black .user-avatar { border-color: #22c55e; }
 .user-select-card.theme-green-black .user-badge { background: #16a34a; border-color: #000000; }
 .user-select-card.theme-purple-black .user-card-depth {
-    background: #7c3aed; box-shadow: 0 15px 35px rgba(124, 58, 237, 0.25);
+    background: #7c3aed;
 }
 .user-select-card.theme-purple-black .user-glass {
     background: linear-gradient(180deg, #1a0f2e 0%, #0d0616 70%, #000000 100%);
@@ -99,7 +99,7 @@ html, body {
 .user-avatar-wrap { position: relative; width: 110px; height: 110px; margin-bottom: 16px; }
 .user-avatar {
     width: 110px; height: 110px; border-radius: 9999px; object-fit: cover;
-    border: 3.5px solid #1a63d1; box-shadow: 0 8px 20px rgba(26, 99, 209, 0.15);
+    border: 3.5px solid #1a63d1;
     background: #fff; transition: transform 0.2s ease;
 }
 .user-select-card:hover .user-avatar { transform: scale(1.05); }
@@ -160,7 +160,7 @@ html, body {
 }
 .card-depth {
     position: absolute; inset: 0; background: #1a63d1; border-radius: 26px;
-    transform: translateZ(-14px); box-shadow: 0 20px 40px rgba(26, 99, 209, 0.15);
+    transform: translateZ(-14px);
     transition: box-shadow 0.15s ease, background 0.2s ease;
 }
 .glass-card {
@@ -183,7 +183,7 @@ html, body {
 .avatar {
     width: 90px; height: 90px; border-radius: 9999px; object-fit: cover;
     border: 3.5px solid #1a63d1; display: block; background: #fff;
-    box-shadow: 0 8px 24px rgba(26, 99, 209, 0.2); transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease;
 }
 .avatar-decoration {
     position: absolute; top: -12px; left: -12px; width: 114px; height: 114px;
@@ -242,7 +242,7 @@ html, body {
 }
 .music-card-depth {
     position: absolute; inset: 0; background: #1a63d1; border-radius: 28px;
-    transform: translateZ(-14px); box-shadow: 0 20px 40px rgba(26, 99, 209, 0.15);
+    transform: translateZ(-14px);
     transition: box-shadow 0.15s ease, background 0.2s ease;
 }
 .music-card {
@@ -292,7 +292,7 @@ html, body {
 }
 .gyro-btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #0c3a70; }
 body.theme-pixel { background: linear-gradient(180deg, #000000 0%, #06210f 55%, #0b3a1c 100%); color: #eafff0; }
-.theme-pixel .card-depth, .theme-pixel .music-card-depth { background: #16a34a; box-shadow: 0 20px 40px rgba(22, 163, 74, 0.25); }
+.theme-pixel .card-depth, .theme-pixel .music-card-depth { background: #16a34a; }
 .theme-pixel .glass-card, .theme-pixel .music-card {
     background: linear-gradient(180deg, #0d1f13 0%, #051608 70%, #000000 100%); border-color: #22c55e;
 }
@@ -317,7 +317,7 @@ body.theme-pixel { background: linear-gradient(180deg, #000000 0%, #06210f 55%, 
 .theme-pixel .page-dot.active { background: #16a34a; }
 .theme-pixel .gyro-btn { background: #16a34a; border-color: #000000; box-shadow: 4px 4px 0 #000000; color: #eafff0; }
 body.theme-x3no { background: linear-gradient(180deg, #000000 0%, #12081f 55%, #241040 100%); color: #f3e8ff; }
-.theme-x3no .card-depth, .theme-x3no .music-card-depth { background: #7c3aed; box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3); }
+.theme-x3no .card-depth, .theme-x3no .music-card-depth { background: #7c3aed; }
 .theme-x3no .glass-card, .theme-x3no .music-card {
     background: linear-gradient(180deg, #1a0f2e 0%, #0d0616 70%, #000000 100%); border-color: #9333ea;
 }
@@ -1104,14 +1104,12 @@ body.theme-x3no { background: linear-gradient(180deg, #000000 0%, #12081f 55%, #
         var hubRotY = hubTilt.curX * 18;
         var hubRotX = hubTilt.curY * -18;
         devSelectCard.style.transform = `rotateX(${hubRotX}deg) rotateY(${hubRotY}deg)`;
-        hubCardDepth.style.boxShadow = `${hubTilt.curX * -12}px ${hubTilt.curY * 12}px 30px rgba(26, 99, 209, 0.18)`;
 
         hubTilt2.curX += (hubTilt2.targetX - hubTilt2.curX) * 0.12;
         hubTilt2.curY += (hubTilt2.targetY - hubTilt2.curY) * 0.12;
         var hubRotY2 = hubTilt2.curX * 18;
         var hubRotX2 = hubTilt2.curY * -18;
         pixelSelectCard.style.transform = `rotateX(${hubRotX2}deg) rotateY(${hubRotY2}deg)`;
-        hubCardDepth2.style.boxShadow = `${hubTilt2.curX * -12}px ${hubTilt2.curY * 12}px 30px rgba(22, 163, 74, 0.25)`;
 
         profileTilt.curX += (profileTilt.targetX - profileTilt.curX) * 0.12;
         profileTilt.curY += (profileTilt.targetY - profileTilt.curY) * 0.12;
@@ -1119,7 +1117,6 @@ body.theme-x3no { background: linear-gradient(180deg, #000000 0%, #12081f 55%, #
         var profileRotX = profileTilt.curY * -18;
         cardWrap.style.transform = `rotateX(${profileRotX}deg) rotateY(${profileRotY}deg)`;
         banner.style.transform = `translate(${profileTilt.curX * -14}px, ${profileTilt.curY * -10}px) scale(1.1)`;
-        profileDepth.style.boxShadow = `${profileTilt.curX * -12}px ${profileTilt.curY * 12}px 30px rgba(26, 99, 209, 0.18)`;
 
         musicTilt.curX += (musicTilt.targetX - musicTilt.curX) * 0.12;
         musicTilt.curY += (musicTilt.targetY - musicTilt.curY) * 0.12;
@@ -1127,7 +1124,6 @@ body.theme-x3no { background: linear-gradient(180deg, #000000 0%, #12081f 55%, #
         var musicRotX = musicTilt.curY * -18;
         musicCardWrap.style.transform = `rotateX(${musicRotX}deg) rotateY(${musicRotY}deg)`;
         musicArtImg.style.transform = `translate(${musicTilt.curX * -10}px, ${musicTilt.curY * -10}px) scale(1.08)`;
-        musicDepth.style.boxShadow = `${musicTilt.curX * -12}px ${musicTilt.curY * 12}px 30px rgba(26, 99, 209, 0.18)`;
 
         profileTilt2.curX += (profileTilt2.targetX - profileTilt2.curX) * 0.12;
         profileTilt2.curY += (profileTilt2.targetY - profileTilt2.curY) * 0.12;
@@ -1135,7 +1131,6 @@ body.theme-x3no { background: linear-gradient(180deg, #000000 0%, #12081f 55%, #
         var profileRotX2 = profileTilt2.curY * -18;
         cardWrap2.style.transform = `rotateX(${profileRotX2}deg) rotateY(${profileRotY2}deg)`;
         banner2.style.transform = `translate(${profileTilt2.curX * -14}px, ${profileTilt2.curY * -10}px) scale(1.1)`;
-        profileDepth2.style.boxShadow = `${profileTilt2.curX * -12}px ${profileTilt2.curY * 12}px 30px rgba(22, 163, 74, 0.25)`;
 
         musicTilt2.curX += (musicTilt2.targetX - musicTilt2.curX) * 0.12;
         musicTilt2.curY += (musicTilt2.targetY - musicTilt2.curY) * 0.12;
@@ -1143,14 +1138,12 @@ body.theme-x3no { background: linear-gradient(180deg, #000000 0%, #12081f 55%, #
         var musicRotX2 = musicTilt2.curY * -18;
         musicCardWrap2.style.transform = `rotateX(${musicRotX2}deg) rotateY(${musicRotY2}deg)`;
         musicArtImg2.style.transform = `translate(${musicTilt2.curX * -10}px, ${musicTilt2.curY * -10}px) scale(1.08)`;
-        musicDepth2.style.boxShadow = `${musicTilt2.curX * -12}px ${musicTilt2.curY * 12}px 30px rgba(22, 163, 74, 0.25)`;
 
         hubTilt3.curX += (hubTilt3.targetX - hubTilt3.curX) * 0.12;
         hubTilt3.curY += (hubTilt3.targetY - hubTilt3.curY) * 0.12;
         var hubRotY3 = hubTilt3.curX * 18;
         var hubRotX3 = hubTilt3.curY * -18;
         x3noSelectCard.style.transform = `rotateX(${hubRotX3}deg) rotateY(${hubRotY3}deg)`;
-        hubCardDepth3.style.boxShadow = `${hubTilt3.curX * -12}px ${hubTilt3.curY * 12}px 30px rgba(124, 58, 237, 0.3)`;
 
         profileTilt3.curX += (profileTilt3.targetX - profileTilt3.curX) * 0.12;
         profileTilt3.curY += (profileTilt3.targetY - profileTilt3.curY) * 0.12;
@@ -1158,7 +1151,6 @@ body.theme-x3no { background: linear-gradient(180deg, #000000 0%, #12081f 55%, #
         var profileRotX3 = profileTilt3.curY * -18;
         cardWrap3.style.transform = `rotateX(${profileRotX3}deg) rotateY(${profileRotY3}deg)`;
         banner3.style.transform = `translate(${profileTilt3.curX * -14}px, ${profileTilt3.curY * -10}px) scale(1.1)`;
-        profileDepth3.style.boxShadow = `${profileTilt3.curX * -12}px ${profileTilt3.curY * 12}px 30px rgba(124, 58, 237, 0.3)`;
 
         musicTilt3.curX += (musicTilt3.targetX - musicTilt3.curX) * 0.12;
         musicTilt3.curY += (musicTilt3.targetY - musicTilt3.curY) * 0.12;
@@ -1166,7 +1158,6 @@ body.theme-x3no { background: linear-gradient(180deg, #000000 0%, #12081f 55%, #
         var musicRotX3 = musicTilt3.curY * -18;
         musicCardWrap3.style.transform = `rotateX(${musicRotX3}deg) rotateY(${musicRotY3}deg)`;
         musicArtImg3.style.transform = `translate(${musicTilt3.curX * -10}px, ${musicTilt3.curY * -10}px) scale(1.08)`;
-        musicDepth3.style.boxShadow = `${musicTilt3.curX * -12}px ${musicTilt3.curY * 12}px 30px rgba(124, 58, 237, 0.3)`;
 
         requestAnimationFrame(animate);
     }
