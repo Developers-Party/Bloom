@@ -337,6 +337,82 @@
     outline:2px solid var(--bloom);
     outline-offset:2px;
   }
+
+  .search input{
+    background:none;
+    border:none;
+    outline:none;
+    color:var(--text-1);
+    font-family:'Inter', sans-serif;
+    font-size:13px;
+    width:100%;
+  }
+  .search input::placeholder{ color:var(--text-3); }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
+    gap:18px;
+    width:100%;
+    align-content:start;
+  }
+
+  .card{
+    border:1px solid var(--hairline);
+    border-radius:12px;
+    overflow:hidden;
+    background:var(--panel);
+    cursor:pointer;
+    transition:border-color .15s ease, transform .12s ease;
+  }
+  .card:hover{ border-color:var(--bloom); transform:translateY(-2px); }
+  .card:focus-visible{ outline:2px solid var(--bloom); outline-offset:2px; }
+
+  .card-art{
+    width:100%;
+    aspect-ratio:460/215;
+    background:#0d0f12;
+  }
+  .card-art img{
+    width:100%; height:100%;
+    object-fit:cover;
+    object-position:center 30%;
+    display:block;
+  }
+
+  .card-body{ padding:12px 14px 14px; }
+  .card-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:15px;
+  }
+  .card-sub{
+    color:var(--text-3);
+    font-size:12px;
+    margin-top:2px;
+  }
+
+  .no-results{
+    color:var(--text-3);
+    font-size:13px;
+    padding:40px 0;
+  }
+
+  .back-btn{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:none;
+    border:none;
+    color:var(--text-2);
+    font-family:'Inter', sans-serif;
+    font-size:13px;
+    cursor:pointer;
+    padding:0 0 16px;
+    width:100%;
+  }
+  .back-btn:hover{ color:var(--text-1); }
+  .back-btn svg{ width:16px; height:16px; }
 </style>
 </head>
 <body>
@@ -371,16 +447,35 @@
       <div class="wordmark"><span class="dot"></span>CGL</div>
       <div class="search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        Search your library
+        <input id="searchInput" type="text" placeholder="Search your library" autocomplete="off">
       </div>
     </div>
 
     <div class="crumb-row">
-      <div class="crumb">Library <span class="here">/ Half-Life</span></div>
-      <div class="count">1 game</div>
+      <div class="crumb" id="crumbEl">Library</div>
+      <div class="count" id="countEl">1 game</div>
     </div>
 
-    <div class="stage">
+    <div class="stage" id="libraryStage">
+      <div class="grid" id="libraryGrid">
+        <div class="card" data-game="half-life" tabindex="0" role="button" aria-label="Open Half-Life">
+          <div class="card-art">
+            <img src="https://plain-enam-prod-public.komododecks.com/202608/13/tVmuEFh7rT61mbyIMt5B/image.jpg" alt="Half-Life box art">
+          </div>
+          <div class="card-body">
+            <div class="card-title">Half-Life</div>
+            <div class="card-sub">Valve &middot; 1998</div>
+          </div>
+        </div>
+      </div>
+      <div class="no-results" id="noResults" hidden>No games match your search.</div>
+    </div>
+
+    <div class="stage" id="detailStage" hidden>
+      <button class="back-btn" id="backBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        Library
+      </button>
       <div class="hero">
 
         <div class="hero-media">
@@ -404,7 +499,6 @@
           <p class="blurb">Named Game of the Year by over 50 publications, Valve's debut title blends action and adventure with award-winning technology to create a frighteningly realistic world where players must think to survive. Also includes an exciting multiplayer mode that allows you to play against friends and enemies around the world.</p>
 
           <div class="meta-rows">
-            <div class="meta-row"><span class="meta-label">Reviews</span><span class="meta-value accent">Overwhelmingly positive</span></div>
             <div class="meta-row"><span class="meta-label">Release date</span><span class="meta-value">Nov 19, 1998</span></div>
             <div class="meta-row"><span class="meta-label">Developer</span><span class="meta-value">Valve</span></div>
             <div class="meta-row"><span class="meta-label">Publisher</span><span class="meta-value">Valve</span></div>
@@ -434,6 +528,49 @@
 
   </div>
 </div>
+
+<script>
+var GAME_TITLE = 'Half-Life';
+document.title = 'Welcome to CGL';
+
+function goToDetail(){
+  document.getElementById('libraryStage').hidden = true;
+  document.getElementById('detailStage').hidden = false;
+  document.getElementById('crumbEl').innerHTML = 'Library <span class="here">/ ' + GAME_TITLE + '</span>';
+  document.title = GAME_TITLE + ' on CGL';
+}
+
+function goToLibrary(){
+  document.getElementById('detailStage').hidden = true;
+  document.getElementById('libraryStage').hidden = false;
+  document.getElementById('crumbEl').textContent = 'Library';
+  document.title = 'Welcome to CGL';
+}
+
+document.querySelectorAll('.card').forEach(function(card){
+  card.addEventListener('click', goToDetail);
+  card.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); goToDetail(); }
+  });
+});
+
+document.getElementById('backBtn').addEventListener('click', goToLibrary);
+
+var searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', function(){
+  var q = searchInput.value.trim().toLowerCase();
+  var cards = document.querySelectorAll('.card');
+  var visibleCount = 0;
+  cards.forEach(function(card){
+    var name = card.querySelector('.card-title').textContent.toLowerCase();
+    var match = name.indexOf(q) !== -1;
+    card.style.display = match ? '' : 'none';
+    if(match) visibleCount++;
+  });
+  document.getElementById('noResults').hidden = visibleCount !== 0;
+  document.getElementById('countEl').textContent = visibleCount + (visibleCount === 1 ? ' game' : ' games');
+});
+</script>
 
 <script>
 (function(){
