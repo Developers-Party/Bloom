@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="cgl-version" content="1.0.0">
 <title>Clouds Game Launcher</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +18,7 @@
     --text-2:#8b8f98;
     --text-3:#5a5e66;
     --bloom:#ff9d4d;
-    --radius:10px;
+    --radius:4px;
   }
 
   *{box-sizing:border-box; margin:0; padding:0;}
@@ -62,7 +63,7 @@
   .rail-btn{
     width:44px; height:44px;
     display:flex; align-items:center; justify-content:center;
-    border-radius:8px;
+    border-radius:4px;
     color:var(--text-3);
     cursor:pointer;
     transition:background .15s ease, color .15s ease;
@@ -117,7 +118,7 @@
     display:flex; align-items:center; gap:8px;
     background:var(--panel);
     border:1px solid var(--hairline);
-    border-radius:7px;
+    border-radius:4px;
     padding:8px 14px;
     width:280px;
     color:var(--text-3);
@@ -149,7 +150,14 @@
   .stage{
     flex:1;
     padding:16px 32px 40px;
-    display:flex;
+    display:none;
+    animation:fadeIn .25s ease;
+  }
+  .stage.is-visible{ display:flex; }
+
+  @keyframes fadeIn{
+    from{ opacity:0; transform:translateY(6px); }
+    to{ opacity:1; transform:translateY(0); }
   }
 
   .hero{
@@ -163,7 +171,7 @@
   /* --- media / video column --- */
   .hero-media{
     border:1px solid var(--hairline);
-    border-radius:16px;
+    border-radius:6px;
     overflow:hidden;
     background:var(--panel);
   }
@@ -192,7 +200,7 @@
   /* --- sidebar / info column --- */
   .hero-info{
     border:1px solid var(--hairline);
-    border-radius:16px;
+    border-radius:6px;
     background:var(--panel);
     padding:18px;
     display:flex;
@@ -203,7 +211,7 @@
   .boxart{
     width:100%;
     aspect-ratio:460/215;
-    border-radius:8px;
+    border-radius:4px;
     overflow:hidden;
     border:1px solid var(--hairline);
     background:#0d0f12;
@@ -223,7 +231,7 @@
     color:var(--text-2);
     border:1px solid var(--hairline);
     padding:4px 9px;
-    border-radius:5px;
+    border-radius:3px;
   }
 
   .hero-info h2{
@@ -276,7 +284,7 @@
     font-size:15px;
     border:none;
     padding:14px 22px;
-    border-radius:8px;
+    border-radius:4px;
     cursor:pointer;
     letter-spacing:0.01em;
     transition:transform .12s ease, background .15s ease;
@@ -290,7 +298,7 @@
   .icon-btn{
     width:44px; height:44px;
     display:flex; align-items:center; justify-content:center;
-    border-radius:8px;
+    border-radius:4px;
     border:1px solid var(--hairline);
     background:var(--void);
     color:var(--text-2);
@@ -359,7 +367,7 @@
 
   .card{
     border:1px solid var(--hairline);
-    border-radius:12px;
+    border-radius:4px;
     overflow:hidden;
     background:var(--panel);
     cursor:pointer;
@@ -413,6 +421,55 @@
   }
   .back-btn:hover{ color:var(--text-1); }
   .back-btn svg{ width:16px; height:16px; }
+
+  .update-toast{
+    position:fixed;
+    left:50%;
+    bottom:24px;
+    transform:translate(-50%, 16px);
+    background:var(--panel-raised);
+    border:1px solid var(--hairline);
+    border-radius:4px;
+    padding:12px 14px 12px 16px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-size:13px;
+    color:var(--text-1);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .2s ease, transform .2s ease;
+    z-index:50;
+  }
+  .update-toast.is-shown{
+    opacity:1;
+    transform:translate(-50%, 0);
+    pointer-events:auto;
+  }
+  .update-toast .dot-live{
+    width:6px; height:6px; border-radius:50%;
+    background:var(--bloom);
+    flex-shrink:0;
+  }
+  .update-toast .msg{ color:var(--text-2); }
+  .update-toast .msg b{ color:var(--text-1); font-weight:500; }
+  .update-toast button{
+    background:var(--bloom);
+    color:#1a0d02;
+    border:none;
+    border-radius:4px;
+    padding:6px 12px;
+    font-size:12.5px;
+    font-weight:500;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .update-toast button.dismiss{
+    background:none;
+    color:var(--text-3);
+    padding:6px 8px;
+  }
+  .update-toast button.dismiss:hover{ color:var(--text-2); }
 </style>
 </head>
 <body>
@@ -456,7 +513,7 @@
       <div class="count" id="countEl">1 game</div>
     </div>
 
-    <div class="stage" id="libraryStage">
+    <div class="stage is-visible" id="libraryStage">
       <div class="grid" id="libraryGrid">
         <div class="card" data-game="half-life" tabindex="0" role="button" aria-label="Open Half-Life">
           <div class="card-art">
@@ -471,7 +528,7 @@
       <div class="no-results" id="noResults" hidden>No games match your search.</div>
     </div>
 
-    <div class="stage" id="detailStage" hidden>
+    <div class="stage" id="detailStage">
       <button class="back-btn" id="backBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
         Library
@@ -529,20 +586,27 @@
   </div>
 </div>
 
+<div class="update-toast" id="updateToast">
+  <span class="dot-live" aria-hidden="true"></span>
+  <span class="msg"><b>Update available.</b> Please wait, refreshing in <span id="updateCountdown">8</span>s&hellip;</span>
+  <button id="updateNowBtn">Refresh now</button>
+  <button class="dismiss" id="updateDismissBtn">Not now</button>
+</div>
+
 <script>
 var GAME_TITLE = 'Half-Life';
 document.title = 'Welcome to CGL';
 
 function goToDetail(){
-  document.getElementById('libraryStage').hidden = true;
-  document.getElementById('detailStage').hidden = false;
+  document.getElementById('libraryStage').classList.remove('is-visible');
+  document.getElementById('detailStage').classList.add('is-visible');
   document.getElementById('crumbEl').innerHTML = 'Library <span class="here">/ ' + GAME_TITLE + '</span>';
   document.title = GAME_TITLE + ' on CGL';
 }
 
 function goToLibrary(){
-  document.getElementById('detailStage').hidden = true;
-  document.getElementById('libraryStage').hidden = false;
+  document.getElementById('detailStage').classList.remove('is-visible');
+  document.getElementById('libraryStage').classList.add('is-visible');
   document.getElementById('crumbEl').textContent = 'Library';
   document.title = 'Welcome to CGL';
 }
@@ -664,6 +728,67 @@ searchInput.addEventListener('input', function(){
       state.seconds += sessionSeconds;
       save(state);
     }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var CURRENT_VERSION = document.querySelector('meta[name="cgl-version"]').content;
+  var toast = document.getElementById('updateToast');
+  var countdownEl = document.getElementById('updateCountdown');
+  var refreshBtn = document.getElementById('updateNowBtn');
+  var dismissBtn = document.getElementById('updateDismissBtn');
+  var CHECK_INTERVAL_MS = 60000;
+  var countdownTimer = null;
+  var updateDetected = false;
+
+  function startCountdown(){
+    var seconds = 8;
+    countdownEl.textContent = seconds;
+    countdownTimer = setInterval(function(){
+      seconds -= 1;
+      countdownEl.textContent = seconds;
+      if(seconds <= 0){
+        clearInterval(countdownTimer);
+        location.reload();
+      }
+    }, 1000);
+  }
+
+  function showToast(){
+    if(updateDetected) return;
+    updateDetected = true;
+    toast.classList.add('is-shown');
+    startCountdown();
+  }
+
+  refreshBtn.addEventListener('click', function(){
+    clearInterval(countdownTimer);
+    location.reload();
+  });
+
+  dismissBtn.addEventListener('click', function(){
+    clearInterval(countdownTimer);
+    toast.classList.remove('is-shown');
+  });
+
+  function checkForUpdate(){
+    if(updateDetected) return;
+    fetch(location.href.split('#')[0].split('?')[0] + '?_=' + Date.now(), { cache:'no-store' })
+      .then(function(res){ return res.text(); })
+      .then(function(html){
+        var match = html.match(/name="cgl-version" content="([^"]+)"/);
+        if(match && match[1] && match[1] !== CURRENT_VERSION){
+          showToast();
+        }
+      })
+      .catch(function(){});
+  }
+
+  setInterval(checkForUpdate, CHECK_INTERVAL_MS);
+  document.addEventListener('visibilitychange', function(){
+    if(document.visibilityState === 'visible') checkForUpdate();
   });
 })();
 </script>
