@@ -6,7 +6,7 @@
   --text-1:#c7d5e0;
   --text-2:#8797a5;
   --text-3:#56636f;
-  --bloom:#ff9d4d;
+  --bloom:#5eb8ff;
   --radius:4px;
 }
 
@@ -20,7 +20,7 @@ html,body{
   overflow-x:hidden;
 }
 
-::selection{ background:var(--bloom); color:#1a0e04; }
+::selection{ background:var(--bloom); color:#062033; }
 
 .app{
   display:grid;
@@ -273,7 +273,7 @@ html,body{
 .play-btn{
   display:flex; align-items:center; gap:10px;
   background:var(--bloom);
-  color:#1a0d02;
+  color:#062033;
   font-family:'Space Grotesk', sans-serif;
   font-weight:600;
   font-size:15px;
@@ -286,7 +286,7 @@ html,body{
   flex:1;
   justify-content:center;
 }
-.play-btn:hover{ background:#ffb066; transform:translateY(-1px); }
+.play-btn:hover{ background:#8ecdff; transform:translateY(-1px); }
 .play-btn:active{ transform:translateY(0px) scale(0.98); }
 .play-btn svg{ width:15px; height:15px; }
 
@@ -450,7 +450,7 @@ a:focus-visible, button:focus-visible{
 .update-toast .msg b{ color:var(--text-1); font-weight:500; }
 .update-toast button{
   background:var(--bloom);
-  color:#1a0d02;
+  color:#062033;
   border:none;
   border-radius:4px;
   padding:6px 12px;
