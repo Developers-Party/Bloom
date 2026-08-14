@@ -290,6 +290,18 @@ html,body{
 .play-btn:active{ transform:translateY(0px) scale(0.98); }
 .play-btn svg{ width:15px; height:15px; }
 
+.play-btn.secondary{
+  background:transparent;
+  color:var(--text-1);
+  border:1px solid var(--hairline);
+  text-decoration:none;
+}
+.play-btn.secondary:hover{
+  background:var(--panel-raised);
+  border-color:var(--bloom);
+  color:var(--bloom);
+}
+
 /* ---------- STATS STRIP ---------- */
 .stats{
   display:flex;
