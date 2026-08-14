@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="cgl-version" content="1.0.1">
+<title>Half-Life on CGL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="rail">
+    <div class="mark" aria-hidden="true">
+      <svg viewBox="0 0 36 36">
+        <path d="M10 24a5.5 5.5 0 01.6-10.96A7 7 0 0124.9 11 6 6 0 0126 22.9V23H10z" fill="#ff9d4d"/>
+      </svg>
+    </div>
+
+    <nav>
+      <a href="../../../index.html" class="rail-btn active" title="Library">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
+      </a>
+      <div class="rail-btn" title="Store">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9h18v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9z"/></svg>
+      </div>
+      <div class="rail-btn" title="Downloads">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M4 19h16"/></svg>
+      </div>
+    </nav>
+
+    <div class="rail-foot" title="Account">C</div>
+  </aside>
+
+  <div class="main">
+
+    <div class="topbar">
+      <a href="../../../index.html" class="wordmark"><span class="dot"></span>CGL</a>
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="text" placeholder="Search your library" autocomplete="off" disabled>
+      </div>
+    </div>
+
+    <div class="crumb-row">
+      <div class="crumb"><a href="../../../index.html">Library</a> <span class="here">/ Half-Life</span></div>
+    </div>
+
+    <div class="stage">
+      <a class="back-btn" href="../../../index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 18l-6-6 6-6"/></svg>
+        Library
+      </a>
+      <div class="hero">
+
+        <div class="hero-media">
+          <div class="video-wrap">
+            <iframe src="https://www.youtube.com/embed/pmo5B6yE2Ok" title="Half-Life fan-made trailer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="media-caption"><i>&#9656;</i> Fan-made trailer</div>
+        </div>
+
+        <div class="hero-info">
+          <div class="boxart">
+            <img src="https://plain-enam-prod-public.komododecks.com/202608/13/tVmuEFh7rT61mbyIMt5B/image.jpg" alt="Half-Life box art">
+          </div>
+
+          <div class="hero-tags">
+            <span class="tag">ACTION</span>
+          </div>
+
+          <h2>Half-Life</h2>
+          <div class="dev">Valve &middot; 1998</div>
+          <p class="blurb">Named Game of the Year by over 50 publications, Valve's debut title blends action and adventure with award-winning technology to create a frighteningly realistic world where players must think to survive. Also includes an exciting multiplayer mode that allows you to play against friends and enemies around the world.</p>
+
+          <div class="meta-rows">
+            <div class="meta-row"><span class="meta-label">Release date</span><span class="meta-value">Nov 19, 1998</span></div>
+            <div class="meta-row"><span class="meta-label">Developer</span><span class="meta-value">Valve</span></div>
+            <div class="meta-row"><span class="meta-label">Publisher</span><span class="meta-value">Valve</span></div>
+          </div>
+
+          <div class="actions">
+            <button class="play-btn" id="playBtn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4l14 8-14 8V4z"/></svg>
+              Play
+            </button>
+          </div>
+
+          <div class="stats">
+            <div class="stat"><div class="num" id="statPlaytime">0m</div><div class="lbl">Playtime</div></div>
+            <div class="stat"><div class="num" id="statLastPlayed">Never</div><div class="lbl">Last played</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="update-toast" id="updateToast">
+  <span class="dot-live" aria-hidden="true"></span>
+  <span class="msg"><b>Update available.</b> Please wait, refreshing in <span id="updateCountdown">8</span>s&hellip;</span>
+  <button id="updateNowBtn">Refresh now</button>
+  <button class="dismiss" id="updateDismissBtn">Not now</button>
+</div>
+
+<script>
+(function(){
+  var STORE_KEY = 'cgl_hl1_stats';
+  var playBtn = document.getElementById('playBtn');
+  var playtimeEl = document.getElementById('statPlaytime');
+  var lastPlayedEl = document.getElementById('statLastPlayed');
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(STORE_KEY);
+      if(!raw) return { seconds: 0, lastPlayed: null };
+      var data = JSON.parse(raw);
+      return { seconds: data.seconds || 0, lastPlayed: data.lastPlayed || null };
+    }catch(e){
+      return { seconds: 0, lastPlayed: null };
+    }
+  }
+
+  function save(state){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  function formatPlaytime(totalSeconds){
+    var h = Math.floor(totalSeconds / 3600);
+    var m = Math.floor((totalSeconds % 3600) / 60);
+    if(h > 0) return h + 'h ' + m + 'm';
+    if(m > 0) return m + 'm';
+    return totalSeconds + 's';
+  }
+
+  function formatLastPlayed(ts){
+    if(!ts) return 'Never';
+    var then = new Date(ts);
+    var now = new Date();
+    var sameDay = then.toDateString() === now.toDateString();
+    if(sameDay) return 'Today';
+    var yesterday = new Date(now); yesterday.setDate(now.getDate() - 1);
+    if(then.toDateString() === yesterday.toDateString()) return 'Yesterday';
+    return then.toLocaleDateString(undefined, { month:'short', day:'numeric' });
+  }
+
+  var state = load();
+  var sessionSeconds = 0;
+  var running = false;
+  var tick = null;
+
+  function render(){
+    playtimeEl.textContent = formatPlaytime(state.seconds + sessionSeconds);
+    lastPlayedEl.textContent = formatLastPlayed(state.lastPlayed);
+  }
+
+  render();
+
+  function startSession(){
+    if(running) return;
+    running = true;
+    playBtn.querySelector('svg').outerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+    playBtn.lastChild.textContent = ' Playing';
+    state.lastPlayed = Date.now();
+    save(state);
+    render();
+    tick = setInterval(function(){
+      sessionSeconds += 1;
+      render();
+      if(sessionSeconds % 5 === 0){
+        var merged = { seconds: state.seconds + sessionSeconds, lastPlayed: state.lastPlayed };
+        save(merged);
+      }
+    }, 1000);
+  }
+
+  function stopSession(){
+    if(!running) return;
+    running = false;
+    clearInterval(tick);
+    state.seconds += sessionSeconds;
+    sessionSeconds = 0;
+    save(state);
+    render();
+    playBtn.querySelector('svg').outerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4l14 8-14 8V4z"/></svg>';
+    playBtn.lastChild.textContent = ' Play';
+  }
+
+  playBtn.addEventListener('click', function(){
+    if(running) stopSession(); else startSession();
+  });
+
+  window.addEventListener('beforeunload', function(){
+    if(running){
+      state.seconds += sessionSeconds;
+      save(state);
+    }
+  });
+})();
+</script>
+<script src="../../../assets/update-check.js"></script>
+
+</body>
+</html>
